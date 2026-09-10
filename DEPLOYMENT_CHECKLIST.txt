@@ -1,0 +1,202 @@
+PUBLIC LISTING STORAGE (CLOUDFLARE)
+1. Create a production KV namespace:
+  npx wrangler kv namespace create LISTINGS_KV
+2. Replace REPLACE_WITH_PRODUCTION_KV_NAMESPACE_ID in wrangler.jsonc with the returned id.
+3. Deploy the Pages site with the updated wrangler.jsonc.
+4. Verify GET /api/listings returns success:true, then publish one test property and refresh the homepage.
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                 DEPLOYMENT CHECKLIST - COOPER FOX AI                        ║
+║                     Print this & check off as you go                        ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+📋 PRE-DEPLOYMENT (Do This First)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Step 1: Update Admin Password
+  ☐ Open mail-config.php
+  ☐ Find line ~21: $_ENV['ADMIN_PASSWORD'] = ...
+  ☐ Change password to something secure
+  ☐ Save file
+  ⚠️  CRITICAL: Don't skip this!
+
+Step 2: Review Security
+  ☐ Verify no hardcoded passwords in HTML files
+  ☐ Verify admin credentials only in mail-config.php
+  ☐ Remember: Email is admin@cooperfoxrealty.com
+  ☐ Remember: Password is what you set above
+
+Step 3: Prepare Files
+  ☐ Verify admin-ai-api.php exists (server API)
+  ☐ Verify admin-ai.html exists (admin dashboard)
+  ☐ Verify data/ai-knowledge.json exists (knowledge base)
+  ☐ Verify index.html updated (Chatway/Vapi removed)
+
+
+🚀 DEPLOYMENT (Upload Files)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Step 4: Upload via cPanel or FTP
+  ☐ Upload admin-ai-api.php → public_html/
+  ☐ Upload admin-ai.html → public_html/
+  ☐ Verify data/ai-knowledge.json exists in public_html/data/
+  ☐ Verify index.html in public_html/ (should be pre-updated)
+
+Step 5: Set File Permissions (CRITICAL)
+  ☐ Permissions on data/ folder: 755
+    └─ Via cPanel: Right-click → Permissions → 755
+    └─ Via SSH: chmod 755 data
+
+  ☐ Permissions on data/ai-knowledge.json: 644
+    └─ Via cPanel: Right-click → Permissions → 644
+    └─ Via SSH: chmod 644 data/ai-knowledge.json
+
+  ⚠️  If permissions wrong → Save will fail!
+
+
+✅ TESTING (Verify Everything Works)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Step 6: Test Admin Login
+  ☐ Open browser
+  ☐ Visit: https://yourdomain.com/admin-ai.html
+  ☐ Enter email: admin@cooperfoxrealty.com
+  ☐ Enter password: (the one you set in mail-config.php)
+  ☐ Click "Open AI admin"
+  ☐ Admin panel should load
+  ☐ Should see: Brand name, Welcome message, FAQ list
+
+Step 7: Test FAQ Edit & Save
+  ☐ Scroll to FAQ section
+  ☐ Click on a FAQ answer text
+  ☐ Edit the answer slightly (add/change a word)
+  ☐ Scroll to top
+  ☐ Click "Save AI settings" button
+  ☐ Wait for green "saved successfully" message
+  ⚠️  If error appears → Check permissions or logs
+
+Step 8: Verify Knowledge File Updated
+  ☐ Via cPanel File Manager:
+    └─ Right-click data/ai-knowledge.json
+    └─ Check "Last Modified" timestamp (should be just now)
+  ☐ Or via SSH: ls -la data/ai-knowledge.json
+    └─ Should show recent timestamp
+
+Step 9: Test Public Chat
+  ☐ Open browser tab 2
+  ☐ Visit: https://yourdomain.com/index.html
+  ☐ Scroll to chat button
+  ☐ Click "Chat with Agent" or "Schedule a Tour"
+  ☐ Chat modal should open
+  ☐ Type keyword matching your edited FAQ
+  ☐ AI should respond with your updated answer
+  ✅ If you see your edited text → Success!
+
+Step 10: Test Session Persistence
+  ☐ Go back to admin-ai.html tab
+  ☐ Refresh page (F5)
+  ☐ Should still be logged in (no login screen)
+  ☐ Should still see admin panel
+  ✅ Session persisted across reload!
+
+Step 11: Test Mobile Access
+  ☐ Get device on same network (or use mobile hotspot)
+  ☐ Open phone browser
+  ☐ Visit: https://yourdomain.com/admin-ai.html
+  ☐ Login with admin credentials
+  ☐ Verify admin panel works on phone
+  ☐ Edit a FAQ and save
+  ☐ Verify it saves (green message)
+  ✅ Mobile admin access works!
+
+Step 12: Test Logout
+  ☐ On admin panel, click "Log out" button
+  ☐ Should return to login screen
+  ☐ Refresh page
+  ☐ Should still be logged out
+  ☐ Enter credentials again to verify login works twice
+  ✅ Session destroyed correctly!
+
+
+🔍 VERIFICATION (Final Checks)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Step 13: Check for Errors
+  ☐ Open cPanel Error Logs
+  ☐ Look for PHP errors
+  ☐ Should see no admin-ai-api.php errors
+  ☐ Check browser console (F12) for JavaScript errors
+  ☐ Should be clean
+
+Step 14: Verify Configuration
+  ☐ Confirm mail-config.php has updated password
+  ☐ Confirm admin-ai-api.php in place and readable
+  ☐ Confirm admin-ai.html in place and readable
+  ☐ Confirm data/ai-knowledge.json readable & writable
+  ☐ Confirm index.html updated (no Chatway script)
+
+Step 15: Test Edge Cases
+  ☐ Login with wrong password → Should show error
+  ☐ Try accessing admin-ai-api.php directly → Should return JSON
+  ☐ Try accessing admin without session → Should show error
+  ☐ Rapid FAQ saves → Should all succeed
+  ☐ Long FAQ text → Should save without truncation
+
+
+🎉 COMPLETION (You're Live!)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Step 16: Final Verification
+  ☐ All tests above passed
+  ☐ Admin can login and edit FAQs
+  ☐ Public chat uses updated knowledge
+  ☐ Mobile access works
+  ☐ No errors in logs
+  ☐ Session persists correctly
+  ☐ Permissions set correctly (755/644)
+
+✅ DEPLOYMENT COMPLETE!
+
+
+📞 QUICK REFERENCE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Admin URL:
+  https://yourdomain.com/admin-ai.html
+
+Admin Credentials:
+  Email: admin@cooperfoxrealty.com
+  Password: (set in mail-config.php)
+
+Key Files:
+  ✓ admin-ai-api.php      (server)
+  ✓ admin-ai.html         (ui)
+  ✓ data/ai-knowledge.json (data)
+  ✓ mail-config.php       (config)
+  ✓ index.html            (public)
+
+Permissions:
+  ✓ data/              → 755
+  ✓ data/ai-knowledge.json → 644
+
+If Issues:
+  1. Check cPanel error logs
+  2. Check file permissions (755/644)
+  3. Check mail-config.php password
+  4. Review ADMIN_AI_SETUP.md troubleshooting
+
+
+📚 DOCUMENTATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+QUICK_START.md           → 3-step setup overview
+ADMIN_AI_SETUP.md        → Full technical reference
+CONSOLIDATION_NOTES.md   → What changed & why
+FILE_VERIFICATION.md     → Complete pre-deploy checklist
+COMPLETION_SUMMARY.md    → Project overview
+
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                 Print this checklist and keep it handy!                    ║
+║                      ✅ All Done? You're Live! 🎉                         ║
+╚════════════════════════════════════════════════════════════════════════════╝

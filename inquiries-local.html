@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer inquiries | Cooper Fox Realty</title>
+    <link rel="icon" type="image/png" href="cooper%20fox%20icon.png" />
+    <link rel="shortcut icon" type="image/png" href="cooper%20fox%20icon.png" />
+    <link rel="apple-touch-icon" href="cooper%20fox%20icon.png" />
+    <link rel="stylesheet" href="cooper-fox-stylesheet.css" />
+</head>
+<body>
+    <main class="account-page">
+        <section class="account-card inquiries-card" aria-labelledby="inquiriesTitle">
+            <a class="account-brand" href="index.html"><span class="account-mark">CF</span><span>Cooper Fox Realty</span></a>
+            <div class="account-heading">
+                <p class="account-kicker">Owner workspace</p>
+                <h1 id="inquiriesTitle">Customer inquiries</h1>
+                <p>Review questions sent from property cards and identify the home each customer asked about.</p>
+            </div>
+            <div class="account-status">This local inbox reads inquiries from this browser. Use a shared backend before publishing publicly.</div>
+            <div id="inquiriesList" class="inquiries-list" aria-live="polite"></div>
+            <p class="account-footer"><a href="post-property.html">Post a property</a> · <a href="applications-local.html">View applications</a> · <a href="index.html">Back to home</a></p>
+        </section>
+    </main>
+
+    <style>
+        .inquiries-card {
+            width: min(100%, 900px);
+        }
+
+        .inquiries-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .inquiry {
+            padding: 18px;
+            border: 1px solid #dbe4df;
+            border-radius: 12px;
+            background: #fff;
+        }
+
+        .inquiry h2 {
+            margin: 0 0 5px;
+            color: #162522;
+            font: 400 1.3rem Georgia, serif;
+        }
+
+        .inquiry-meta {
+            margin: 0 0 14px;
+            color: #65746d;
+            font: 0.76rem Arial, sans-serif;
+        }
+
+        .inquiry-message {
+            margin: 0;
+            color: #162522;
+            font: 0.94rem/1.5 Arial, sans-serif;
+        }
+
+        .inquiry-contact {
+            margin: 14px 0 0;
+            padding-top: 12px;
+            border-top: 1px solid #e8eeeb;
+            color: #65746d;
+            font: 0.78rem Arial, sans-serif;
+        }
+    </style>
+
+    <script>
+        const inquiriesList = document.getElementById('inquiriesList');
+        const inquiries = JSON.parse(localStorage.getItem('cooperFoxInquiries') || '[]');
+        if (!inquiries.length) {
+            inquiriesList.innerHTML = '<p class="account-status">No customer inquiries have been submitted yet.</p>';
+        } else {
+            inquiries.slice().reverse().forEach((inquiry) => {
+                const article = document.createElement('article');
+                article.className = 'inquiry';
+                article.innerHTML = `<h2>${inquiry.property || 'Property inquiry'}</h2><p class="inquiry-meta">${inquiry.city || 'Location pending'} · ${inquiry.id || 'Reference pending'} · ${new Date(inquiry.submittedAt).toLocaleString()}</p><p class="inquiry-message"></p><p class="inquiry-contact"></p>`;
+                article.querySelector('.inquiry-message').textContent = inquiry.message || 'No message provided.';
+                const user = inquiry.user;
+                article.querySelector('.inquiry-contact').textContent = user ? `Signed-in customer: ${user.name || 'Customer'} · ${user.email || 'No email'}` : 'Guest inquiry · customer did not create an account';
+                inquiriesList.appendChild(article);
+            });
+        }
+    </script>
+</body>
+</html>

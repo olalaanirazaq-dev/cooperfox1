@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign in or create an account | Cooper Fox Realty</title>
+    <link rel="icon" type="image/png" href="cooper%20fox%20icon.png" />
+    <link rel="shortcut icon" type="image/png" href="cooper%20fox%20icon.png" />
+    <link rel="apple-touch-icon" href="cooper%20fox%20icon.png" />
+    <link rel="stylesheet" href="cooper-fox-stylesheet.css" />
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #eef4f2 0%, #f8f6f1 100%);
+        color: #162522;
+      }
+      .account-shell {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 32px 16px;
+      }
+      .account-card {
+        width: min(100%, 980px);
+        background: rgba(255,255,255,0.96);
+        border: 1px solid rgba(18,32,29,0.08);
+        box-shadow: 0 24px 58px rgba(11, 26, 24, 0.12);
+        border-radius: 20px;
+        overflow: hidden;
+      }
+      .account-layout {
+        display: grid;
+        grid-template-columns: 1.05fr 1fr;
+      }
+      .brand-panel {
+        background: linear-gradient(180deg, #102722 0%, #1c3d38 100%);
+        color: white;
+        padding: 42px 34px;
+      }
+      .brand-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 30px;
+        font-weight: 700;
+      }
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        background: linear-gradient(135deg,#d8bd84,#f0e3c2);
+        color: #102722;
+        font-size: 0.82rem;
+      }
+      .brand-panel h1 {
+        font-size: clamp(2.1rem, 4vw, 3rem);
+        line-height: 1.1;
+        margin: 0 0 16px;
+      }
+      .brand-panel p {
+        opacity: 0.9;
+        line-height: 1.6;
+        margin: 0;
+      }
+      .brand-points {
+        list-style: none;
+        margin: 26px 0 0;
+        padding: 0;
+        display: grid;
+        gap: 14px;
+      }
+      .brand-points li {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        opacity: 0.94;
+      }
+      .brand-points li::before {
+        content: '✓';
+        display: inline-grid;
+        place-items: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: rgba(216,189,132,0.18);
+        color: #f0e3c2;
+        font-size: 0.8rem;
+      }
+      .form-panel {
+        padding: 28px 28px 20px;
+      }
+      .tabs {
+        display: inline-flex;
+        background: #edf2ef;
+        border-radius: 999px;
+        padding: 5px;
+        margin-bottom: 18px;
+      }
+      .tab {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 128px;
+        height: 42px;
+        border: 0;
+        border-radius: 999px;
+        background: transparent;
+        color: #223833;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .tab.active {
+        background: #ffffff;
+        box-shadow: 0 8px 18px rgba(9, 25, 20, 0.08);
+      }
+      .auth-form {
+        display: none;
+        gap: 16px;
+      }
+      .auth-form.active {
+        display: grid;
+      }
+      .field {
+        display: grid;
+        gap: 8px;
+      }
+      .field label {
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: #52635e;
+      }
+      .field input {
+        width: 100%;
+        border: 1px solid #d7e3e0;
+        border-radius: 12px;
+        height: 52px;
+        padding: 0 14px;
+        font-size: 1rem;
+        box-sizing: border-box;
+      }
+      .field input:focus {
+        outline: 2px solid rgba(24, 124, 98, 0.18);
+        border-color: #1b826c;
+      }
+      .submit-btn,
+      .link-btn {
+        border: none;
+        cursor: pointer;
+        border-radius: 999px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .submit-btn {
+        height: 52px;
+        background: linear-gradient(135deg, #102722, #1f4d46);
+        color: white;
+        font-size: 0.96rem;
+      }
+      .meta-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.82rem;
+        color: #52635e;
+      }
+      .link-btn {
+        display: inline-grid;
+        place-items: center;
+        background: transparent;
+        color: #1d5f52;
+        padding: 0;
+      }
+      .message {
+        min-height: 24px;
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: #b1461d;
+      }
+      .message.success {
+        color: #0d7a5f;
+      }
+      .footer-link {
+        margin-top: 14px;
+        font-size: 0.82rem;
+        color: #52635e;
+      }
+      .footer-link a {
+        color: #123d36;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      @media (max-width: 760px) {
+        .account-layout {
+          grid-template-columns: 1fr;
+        }
+        .brand-panel {
+          padding-bottom: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="account-shell">
+      <div class="account-card">
+        <div class="account-layout">
+          <aside class="brand-panel">
+            <div class="brand-row">
+              <div class="brand-mark">CF</div>
+              <span>Cooper Fox Realty</span>
+            </div>
+            <h1>Welcome back to your home search.</h1>
+            <p>Save your favorite homes, track applications, and keep every rental conversation connected to your account.</p>
+            <ul class="brand-points">
+              <li>View saved listings and application progress</li>
+              <li>Manage inquiries and property updates</li>
+              <li>Move faster with one connected account</li>
+            </ul>
+          </aside>
+
+          <main class="form-panel">
+            <div class="tabs" aria-label="Authentication mode">
+              <button class="tab active" type="button" data-mode="signin">Sign in</button>
+              <button class="tab" type="button" data-mode="signup">Create account</button>
+            </div>
+
+            <div id="signinPanel" class="auth-form active" aria-live="polite">
+              <form id="signinForm" method="post" action="/api/mail">
+                <input type="hidden" name="Action" value="sign_in" />
+                <div class="field">
+                  <label for="signinEmail">Email</label>
+                  <input id="signinEmail" name="Email" type="email" autocomplete="email" placeholder="you@example.com" required />
+                </div>
+                <div class="field">
+                  <label for="signinPassword">Password</label>
+                  <input id="signinPassword" name="Password" type="password" autocomplete="current-password" minlength="12" pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{12,}" title="Use at least 12 characters with uppercase, lowercase, numbers, and a symbol." placeholder="Enter your password" required />
+                </div>
+                <div class="meta-row">
+                  <label><input type="checkbox" /> Keep me signed in</label>
+                  <a class="link-btn" href="forgot-password.php">Forgot password?</a>
+                </div>
+                <button class="submit-btn" type="submit">Sign in</button>
+              </form>
+            </div>
+
+            <div id="signupPanel" class="auth-form" aria-live="polite">
+              <form id="signupForm" method="post" action="/api/mail">
+                <input type="hidden" name="Action" value="sign_up" />
+                <div class="field">
+                  <label for="signupName">Full name</label>
+                  <input id="signupName" name="Name" type="text" autocomplete="name" placeholder="Your full name" required />
+                </div>
+                <div class="field">
+                  <label for="signupEmail">Email</label>
+                  <input id="signupEmail" name="Email" type="email" autocomplete="email" placeholder="you@example.com" required />
+                </div>
+                <div class="field">
+                  <label for="signupPassword">Password</label>
+                  <input id="signupPassword" name="Password" type="password" autocomplete="new-password" minlength="12" pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{12,}" title="Use at least 12 characters with uppercase, lowercase, numbers, and a symbol." placeholder="Create a strong password" required />
+                </div>
+                <button class="submit-btn" type="submit">Create account</button>
+              </form>
+            </div>
+
+            <div id="accountMessage" class="message" aria-live="polite"></div>
+            <p class="footer-link"><a href="index.html">Back to home</a></p>
+          </main>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const query = new URLSearchParams(window.location.search);
+      const mode = (window.location.hash || '').replace('#', '') || query.get('mode') || 'signin';
+      const accountMessage = document.getElementById('accountMessage');
+      const tabs = [...document.querySelectorAll('.tab')];
+      const forms = {
+        signin: document.getElementById('signinPanel'),
+        signup: document.getElementById('signupPanel')
+      };
+
+      function showMode(nextMode) {
+        tabs.forEach((tab) => tab.classList.toggle('active', tab.dataset.mode === nextMode));
+        Object.entries(forms).forEach(([key, form]) => {
+          form.classList.toggle('active', key === nextMode);
+        });
+        window.location.hash = nextMode;
+      }
+
+      function showMessage(text, isSuccess = false) {
+        accountMessage.textContent = text;
+        accountMessage.classList.toggle('success', isSuccess);
+      }
+
+      if (mode === 'signup') showMode('signup');
+      else showMode('signin');
+
+      const status = query.get('status');
+      if (status) {
+        showMessage(decodeURIComponent(status), status.toLowerCase().includes('success') || status.toLowerCase().includes('welcome'));
+      }
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => showMode(tab.dataset.mode));
+      });
+
+      document.querySelectorAll('[data-mode="signup"]').forEach((button) => {
+        button.addEventListener('click', () => showMode('signup'));
+      });
+
+      function validateStrongPassword(password) {
+        return /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{12,}$/.test(password);
+      }
+
+      document.getElementById('signupForm').addEventListener('submit', (event) => {
+        const name = document.getElementById('signupName').value.trim();
+        const email = document.getElementById('signupEmail').value.trim().toLowerCase();
+        const password = document.getElementById('signupPassword').value;
+
+        if (!name || !email || !validateStrongPassword(password)) {
+          event.preventDefault();
+          showMessage('Please enter a full name and a strong password with 12+ characters, uppercase, lowercase, a number, and a symbol.');
+        }
+      });
+
+      document.getElementById('signinForm').addEventListener('submit', (event) => {
+        const email = document.getElementById('signinEmail').value.trim().toLowerCase();
+        const password = document.getElementById('signinPassword').value;
+
+        if (!email || !password || !validateStrongPassword(password)) {
+          event.preventDefault();
+          showMessage('Please enter a valid email and your password. Passwords must be at least 12 characters and include a number, uppercase, lowercase, and a symbol.');
+        }
+      });
+    </script>
+    <script src="remember-last-page.js"></script>
+  </body>
+</html>

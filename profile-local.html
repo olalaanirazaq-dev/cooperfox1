@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My profile | Cooper Fox Realty</title>
+    <link rel="icon" type="image/png" href="cooper%20fox%20icon.png" />
+    <link rel="shortcut icon" type="image/png" href="cooper%20fox%20icon.png" />
+    <link rel="apple-touch-icon" href="cooper%20fox%20icon.png" />
+    <link rel="stylesheet" href="cooper-fox-stylesheet.css" />
+</head>
+<body>
+    <main class="account-page">
+        <section class="account-card profile-card" aria-labelledby="profileTitle">
+            <a class="account-brand" href="index.html"><span class="account-mark">CF</span><span>Cooper Fox Realty</span></a>
+            <div class="profile-hero">
+                <div class="profile-avatar" id="profileAvatar">CF</div>
+                <div>
+                    <p class="account-kicker">Your account</p>
+                    <h1 id="profileTitle">My profile</h1>
+                    <p id="profileIntro">Your Cooper Fox Realty activity.</p>
+                </div>
+            </div>
+
+            <div id="signedOut" class="account-status" hidden>Guest browsing is active. Public profile access is hidden for now.</div>
+            <div id="profileContent" hidden>
+                <div class="profile-info">
+                    <span>Full name</span><strong id="profileName">Not provided</strong>
+                    <span>Email</span><strong id="profileEmail">Not provided</strong>
+                </div>
+                <div class="profile-sections">
+                    <a href="applications-local.html"><strong id="applicationCount">0</strong><span>Applications</span></a>
+                    <a href="inquiries-local.html"><strong id="inquiryCount">0</strong><span>Inquiries</span></a>
+                    <a href="post-property.html"><strong id="listingCount">0</strong><span>Post a property</span></a>
+                </div>
+                <button id="signOut" class="account-submit" type="button">Sign out</button>
+            </div>
+            <p class="account-footer"><a href="index.html">Back to home</a></p>
+        </section>
+    </main>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #edf3f1 0%, #f9f5ee 100%);
+            color: #162522;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .account-page {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 30px 18px;
+        }
+
+        .profile-card {
+            width: min(100%, 720px);
+            padding: 28px 28px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(15, 31, 27, 0.08);
+            background: rgba(255, 255, 255, 0.96);
+            box-shadow: 0 28px 60px rgba(15, 31, 27, 0.12);
+        }
+
+        .account-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            color: #162522;
+            text-decoration: none;
+        }
+
+        .account-mark {
+            display: inline-grid;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #d8bd84, #f0e3c2);
+            color: #102722;
+            font-size: 0.82rem;
+        }
+
+        .profile-hero {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin: 30px 0 24px;
+        }
+
+        .profile-avatar {
+            display: grid;
+            width: 72px;
+            height: 72px;
+            place-items: center;
+            border-radius: 50%;
+            color: #162522;
+            background: linear-gradient(135deg, #d8bd84, #f0e3c2);
+            font: 800 1.2rem Arial, sans-serif;
+            box-shadow: inset 0 0 0 1px rgba(17, 30, 26, 0.04);
+        }
+
+        .profile-hero h1 {
+            font-size: clamp(2rem, 7vw, 3rem);
+            margin: 0;
+        }
+
+        .account-kicker {
+            margin: 0 0 6px;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #5a6e68;
+        }
+
+        .profile-info {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 12px;
+            padding: 18px;
+            border: 1px solid #dbe4df;
+            border-radius: 12px;
+            background: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        .profile-info span {
+            color: #65746d;
+            font-size: .74rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .profile-info strong {
+            color: #162522;
+            font-size: .9rem;
+            overflow-wrap: anywhere;
+        }
+
+        .profile-sections {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 18px 0;
+        }
+
+        .profile-sections a {
+            display: grid;
+            gap: 6px;
+            padding: 17px;
+            border: 1px solid #dbe4df;
+            border-radius: 12px;
+            color: #162522;
+            background: #fff;
+            text-decoration: none;
+            font-family: Arial, sans-serif;
+            transition: transform .2s, border-color .2s, box-shadow .2s;
+        }
+
+        .profile-sections a:hover {
+            border-color: #0d7a5f;
+            box-shadow: 0 8px 18px rgba(13,122,95,.12);
+            transform: translateY(-2px);
+        }
+
+        .profile-sections strong {
+            color: #0d7a5f;
+            font: 400 1.7rem Georgia, serif;
+        }
+
+        .profile-sections span {
+            color: #65746d;
+            font-size: .72rem;
+        }
+
+        .account-submit {
+            width: 100%;
+            height: 52px;
+            border: none;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #102722 0%, #1f4d46 100%);
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .account-submit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 20px rgba(14, 37, 34, 0.16);
+        }
+
+        .account-status {
+            margin: 0 0 18px;
+            padding: 12px 14px;
+            border: 1px solid rgba(13, 122, 95, 0.15);
+            border-radius: 10px;
+            background: rgba(13, 122, 95, 0.05);
+            color: #183c34;
+            line-height: 1.5;
+        }
+
+        .account-status a {
+            color: #0d7a5f;
+            font-weight: 700;
+        }
+
+        .account-footer {
+            margin-top: 18px;
+            text-align: center;
+            font-size: 0.82rem;
+            color: #5a6e68;
+        }
+
+        .account-footer a {
+            color: #173d35;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        @media (max-width: 520px) {
+            .profile-card {
+                padding: 22px 18px 18px;
+            }
+
+            .profile-hero {
+                margin-top: 18px;
+            }
+
+            .profile-info {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+
+            .profile-info strong {
+                margin-bottom: 8px;
+            }
+
+            .profile-sections {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script>
+        const signedOut = document.getElementById('signedOut');
+        const profileContent = document.getElementById('profileContent');
+        const safeArray = (key) => {
+            try { const value = JSON.parse(localStorage.getItem(key) || '[]'); return Array.isArray(value) ? value : []; } catch { return []; }
+        };
+
+        async function resolveCurrentUser() {
+            try {
+                const localValue = JSON.parse(localStorage.getItem('copperFoxCurrentUser') || 'null');
+                if (localValue && localValue.email) return localValue;
+            } catch {
+                // Ignore malformed local storage data.
+            }
+
+            try {
+                const response = await fetch('/api/session', { credentials: 'same-origin' });
+                if (!response.ok) return null;
+                const account = await response.json();
+                if (!account || !account.authenticated) return null;
+                const hydratedUser = { name: account.name || 'Cooper Fox member', email: account.email || '' };
+                localStorage.setItem('copperFoxCurrentUser', JSON.stringify(hydratedUser));
+                return hydratedUser;
+            } catch {
+                return null;
+            }
+        }
+
+        (async () => {
+            const currentUser = await resolveCurrentUser();
+            if (!currentUser) {
+                signedOut.hidden = false;
+                return;
+            }
+
+            profileContent.hidden = false;
+            const name = currentUser.name || 'Cooper Fox member';
+            document.getElementById('profileName').textContent = name;
+            document.getElementById('profileEmail').textContent = currentUser.email || 'No email provided';
+            document.getElementById('profileIntro').textContent = `Welcome back, ${name}.`;
+            document.getElementById('profileAvatar').textContent = name.split(/\s+/).map((part) => part[0]).join('').slice(0, 2).toUpperCase();
+            document.getElementById('applicationCount').textContent = safeArray('cooperFoxApplications').filter((item) => item.Email === currentUser.email).length;
+            document.getElementById('inquiryCount').textContent = safeArray('cooperFoxInquiries').filter((item) => item.user?.email === currentUser.email).length;
+            document.getElementById('listingCount').textContent = safeArray('cooperFoxRentalListings').filter((item) => item.postedByAccount?.email === currentUser.email).length;
+        })();
+
+        document.getElementById('signOut')?.addEventListener('click', async () => {
+            localStorage.removeItem('copperFoxCurrentUser');
+            try {
+                await fetch('/api/mail', {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                    body: 'Action=sign_out'
+                });
+            } catch {
+                // Ignore route-side sign-out errors and continue to the home page.
+            }
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>

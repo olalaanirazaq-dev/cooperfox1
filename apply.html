@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apply for a property | Cooper Fox Realty</title>
+    <link rel="icon" type="image/png" href="cooper%20fox%20icon.png" />
+    <link rel="shortcut icon" type="image/png" href="cooper%20fox%20icon.png" />
+    <link rel="apple-touch-icon" href="cooper%20fox%20icon.png" />
+    <link rel="stylesheet" href="cooper-fox-stylesheet.css" />
+</head>
+<body>
+    <main class="account-page">
+        <section class="account-card application-form-card" aria-labelledby="applicationTitle">
+            <a class="account-brand" href="index.html" aria-label="Back to Cooper Fox Realty home">
+                <span class="account-mark">CF</span>
+                <span>Cooper Fox Realty</span>
+            </a>
+
+            <div class="application-hero-image">
+                <img src="cupertino1.webp" alt="Cooper Fox Realty available home" />
+                <div>
+                    <span>Cooper Fox Realty</span>
+                    <strong>Your next home starts here.</strong>
+                </div>
+            </div>
+
+            <div class="account-heading">
+                <p class="account-kicker">Rental application</p>
+                <h1 id="applicationTitle">Apply for this home</h1>
+                <p id="propertySummary">Choose a property from the available listings.</p>
+            </div>
+
+            <div class="form-progress" aria-label="Application steps">
+                <span class="active">01 Your details</span>
+                <span>02 Review</span>
+                <span>03 Cooper Fox response</span>
+            </div>
+
+            <form id="applicationForm" class="account-form application-form" method="POST" action="/api/apply">
+                <input type="hidden" name="Property" id="propertyField" value="" />
+                <input type="hidden" name="City" id="cityField" value="" />
+                <input type="hidden" name="Price" id="priceField" value="" />
+                <input type="hidden" name="Stage" value="conversation" />
+                <input type="hidden" name="FeePaymentMethod" value="Discuss directly in Cooper Fox chat" />
+
+                <div id="detailsStep">
+                    <div class="details-intro">
+                        <span class="details-intro-number">01</span>
+                        <div>
+                            <p class="account-kicker">Step one</p>
+                            <h2>Your details</h2>
+                            <p>Tell us about yourself so Cooper Fox can review your application.</p>
+                        </div>
+                    </div>
+                    <label for="applicationName">Full name</label>
+                    <input id="applicationName" type="text" name="Name" autocomplete="name" required />
+
+                    <label for="applicationEmail">Email address</label>
+                    <input id="applicationEmail" type="email" name="Email" autocomplete="email" required />
+
+                    <label for="applicationPhone">Phone number</label>
+                    <input id="applicationPhone" type="tel" name="Phone" autocomplete="tel" required />
+
+                    <label for="applicationAddress">Current address</label>
+                    <textarea id="applicationAddress" name="Address" rows="2" autocomplete="street-address" placeholder="Street, city, state, ZIP"></textarea>
+
+                    <label for="moveDate">Preferred move-in date</label>
+                    <input id="moveDate" type="date" name="MoveDate" required />
+
+                    <label for="employment">Employment or income source</label>
+                    <input id="employment" type="text" name="Employment" placeholder="Employer, self-employed, student, etc." required />
+
+                    <label for="income">Approximate monthly income</label>
+                    <input id="income" type="text" name="Income" placeholder="$6,000" required />
+
+                    <label for="occupants">Number of occupants</label>
+                    <input id="occupants" type="number" name="Occupants" min="1" max="20" required />
+
+                    <label for="pets">Pets</label>
+                    <select id="pets" name="Pets">
+                        <option value="No">No</option>
+                        <option value="Yes">Yes, I have a pet</option>
+                    </select>
+
+                    <label for="creditScore">Credit score</label>
+                    <input id="creditScore" type="number" name="CreditScore" min="300" max="850" placeholder="650" />
+
+                    <label for="monthlySalary">Monthly salary</label>
+                    <input id="monthlySalary" type="text" name="MonthlySalary" placeholder="$6,000" />
+
+                    <input type="hidden" name="FeePaymentMethod" value="Discuss directly in Cooper Fox chat" />
+                    <p class="form-help">The refundable $70 application fee will be discussed directly in the Cooper Fox chat after you submit. No third-party payment app or payment details are needed on this form.</p>
+
+                    <p class="form-help">Start a conversation with Cooper Fox. After we review your application, we will share payment instructions in chat. Do not enter payment card numbers here.</p>
+
+                    <label for="applicationMessage">Message</label>
+                    <textarea id="applicationMessage" name="Message" rows="4" placeholder="Tell us a little about your move."></textarea>
+
+                    <label class="check-label" for="agreeToTerms">
+                        <input id="agreeToTerms" type="checkbox" name="AgreeToTerms" value="yes" required />
+                        I confirm my information is complete and accurate, understand this is not a lease, and agree that Cooper Fox Realty may request more information.
+                    </label>
+
+                    <button id="nextToReview" class="account-submit" type="button">Next: Review</button>
+                </div>
+
+                <div id="reviewStep" hidden>
+                    <div class="review-summary" id="reviewSummary"></div>
+                    <div class="review-actions">
+                        <button id="backToDetails" type="button" class="secondary-button">Back</button>
+                        <button class="account-submit" type="submit">Submit your application</button>
+                    </div>
+                </div>
+            </form>
+
+            <p class="account-footer">No account required to apply. <a href="index.html#listings">Return to available homes</a></p>
+        </section>
+    </main>
+
+    <style>
+        .application-form-card {
+            padding: 22px 22px 20px;
+        }
+
+        .application-hero-image {
+            position: relative;
+            height: 190px;
+            overflow: hidden;
+            border-radius: 18px;
+            margin: 18px 0 20px;
+            background: #dfe7e3;
+        }
+
+        .application-hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: saturate(0.9) contrast(1.03);
+        }
+
+        .application-hero-image div {
+            position: absolute;
+            inset: auto 18px 18px 18px;
+            display: grid;
+            gap: 4px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            background: rgba(11, 18, 20, 0.52);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            backdrop-filter: blur(4px);
+            color: #fff;
+        }
+
+        .application-hero-image div span {
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        .application-hero-image div strong {
+            font-size: 1.2rem;
+            line-height: 1.2;
+            font-weight: 700;
+        }
+
+        .form-progress {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            margin: 22px 0 18px;
+        }
+
+        .form-progress span {
+            display: block;
+            padding: 11px 12px;
+            border: 1px solid #dfe7e3;
+            border-radius: 999px;
+            background: #f6f9f8;
+            color: #526863;
+            font-size: 0.75rem;
+            text-align: center;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .form-progress span.active {
+            background: linear-gradient(135deg, #102722, #1d4d46);
+            border-color: transparent;
+            color: #fff;
+            box-shadow: 0 10px 18px rgba(16, 39, 34, 0.12);
+        }
+
+        .details-intro {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 18px 10px;
+            margin: 0 0 18px;
+            border: 1px solid #edf2ef;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(216, 189, 132, 0.12), rgba(255, 255, 255, 0.7));
+        }
+
+        .details-intro-number {
+            display: grid;
+            place-items: center;
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            border-radius: 12px;
+            background: #102722;
+            color: #fff;
+            font-weight: 800;
+            font-size: 0.8rem;
+        }
+
+        .details-intro h2 {
+            margin: 0;
+            color: #162522;
+            font-size: clamp(1.35rem, 2vw, 1.8rem);
+        }
+
+        .details-intro p:last-child {
+            margin: 4px 0 0;
+            color: #5b6d69;
+            line-height: 1.5;
+        }
+
+        .account-form {
+            margin-top: 0;
+        }
+
+        .account-form label {
+            margin-top: 8px;
+        }
+
+        .check-label {
+            display: flex !important;
+            align-items: flex-start;
+            gap: 12px;
+            margin-top: 16px;
+            padding: 14px 14px;
+            border: 1px solid #e4ece8;
+            border-radius: 12px;
+            background: #f9fbfa;
+            text-transform: none !important;
+            letter-spacing: 0 !important;
+            font-weight: 500 !important;
+            color: #213530 !important;
+        }
+
+        .check-label input {
+            width: 18px !important;
+            min-height: 18px !important;
+            margin-top: 3px;
+            accent-color: #0d7a5f;
+        }
+
+        .secondary-button {
+            border: 1px solid #dfe7e3;
+            background: #fff;
+            color: #153128;
+            border-radius: 10px;
+            padding: 14px 18px;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .review-summary {
+            display: grid;
+            gap: 10px;
+            padding: 18px 18px 8px;
+            border: 1px solid #e8eeeb;
+            border-radius: 12px;
+            background: #f8faf9;
+        }
+
+        .review-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 10px 0;
+            border-bottom: 1px solid #e7ebea;
+        }
+
+        .review-row:last-child {
+            border-bottom: none;
+        }
+
+        .review-row span {
+            color: #5a6b66;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .review-row strong {
+            text-align: right;
+            font-size: 0.96rem;
+            color: #153128;
+        }
+
+        .review-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 640px) {
+            .application-form-card {
+                padding: 18px 16px 16px;
+            }
+
+            .application-hero-image {
+                height: 150px;
+            }
+
+            .form-progress {
+                grid-template-columns: 1fr;
+            }
+
+            .details-intro {
+                align-items: flex-start;
+                padding: 16px 14px;
+            }
+        }
+    </style>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const property = params.get('property') || '';
+        const city = params.get('city') || '';
+        const price = params.get('price') || '';
+
+        const propertyField = document.getElementById('propertyField');
+        const cityField = document.getElementById('cityField');
+        const priceField = document.getElementById('priceField');
+        const propertySummary = document.getElementById('propertySummary');
+
+        if (propertyField) propertyField.value = property;
+        if (cityField) cityField.value = city;
+        if (priceField) priceField.value = price;
+        if (propertySummary && property) {
+            propertySummary.textContent = `${property}${city ? ', ' + city : ''}${price ? ' · ' + price : ''}`;
+        }
+
+        const applicationForm = document.getElementById('applicationForm');
+        const detailsStep = document.getElementById('detailsStep');
+        const reviewStep = document.getElementById('reviewStep');
+        const nextToReview = document.getElementById('nextToReview');
+        const backToDetails = document.getElementById('backToDetails');
+        const reviewSummary = document.getElementById('reviewSummary');
+        const formProgress = document.querySelector('.form-progress');
+        const progressSteps = formProgress ? [...formProgress.querySelectorAll('span')] : [];
+
+        function showStep(step) {
+            const isReview = step === 'review';
+            if (detailsStep) detailsStep.hidden = isReview;
+            if (reviewStep) reviewStep.hidden = !isReview;
+
+            if (progressSteps.length) {
+                progressSteps.forEach((stepNode, index) => {
+                    const isActive = isReview ? index === 1 : index === 0;
+                    stepNode.classList.toggle('active', isActive);
+                });
+                formProgress.style.setProperty('--completion', isReview ? '72%' : '0%');
+                const activeStep = formProgress.querySelector('.active');
+                if (activeStep) {
+                    activeStep.textContent = isReview ? '02 Review' : '01 Your details';
+                }
+            }
+        }
+
+        function updateReviewSummary() {
+            const summary = {
+                Property: property || document.getElementById('propertyField')?.value || 'Not selected',
+                Location: city || document.getElementById('cityField')?.value || 'Not provided',
+                Price: price || document.getElementById('priceField')?.value || 'Not provided',
+                Name: document.getElementById('applicationName')?.value || '',
+                Email: document.getElementById('applicationEmail')?.value || '',
+                Phone: document.getElementById('applicationPhone')?.value || '',
+                Address: document.getElementById('applicationAddress')?.value || '',
+                'Move-in date': document.getElementById('moveDate')?.value || '',
+                Employment: document.getElementById('employment')?.value || '',
+                Income: document.getElementById('income')?.value || '',
+                Occupants: document.getElementById('occupants')?.value || '',
+                Pets: document.getElementById('pets')?.value || '',
+                'Credit score': document.getElementById('creditScore')?.value || '',
+                'Monthly salary': document.getElementById('monthlySalary')?.value || '',
+                'Available funds': document.getElementById('availableFunds')?.value || '',
+                'Fee method': document.getElementById('feePaymentMethod')?.value || '',
+                Message: document.getElementById('applicationMessage')?.value || 'No message added.'
+            };
+
+            reviewSummary.innerHTML = Object.entries(summary).map(([label, value]) => `
+                <div class="review-row">
+                    <span>${label}</span>
+                    <strong>${value || 'Not provided'}</strong>
+                </div>
+            `).join('');
+        }
+
+        if (nextToReview) {
+            nextToReview.addEventListener('click', (event) => {
+                event.preventDefault();
+                if (!applicationForm.reportValidity()) return;
+                updateReviewSummary();
+                showStep('review');
+            });
+        }
+
+        if (backToDetails) {
+            backToDetails.addEventListener('click', () => {
+                showStep('details');
+            });
+        }
+
+        const progress = document.querySelector('.form-progress');
+        if (applicationForm && progress) {
+            const requiredFields = [...applicationForm.querySelectorAll('[required]')];
+            const progressText = progress.querySelector('.active');
+            const updateProgress = () => {
+                const completed = requiredFields.filter((field) => field.type === 'checkbox' ? field.checked : field.value.trim() !== '').length;
+                const percentage = requiredFields.length ? Math.round((completed / requiredFields.length) * 100) : 0;
+                if (progressText) {
+                    progressText.textContent = `01 Your details · ${percentage}% complete`;
+                }
+                progress.style.setProperty('--completion', `${percentage}%`);
+            };
+
+            requiredFields.forEach((field) => {
+                field.addEventListener('input', updateProgress);
+                field.addEventListener('change', updateProgress);
+            });
+
+            applicationForm.addEventListener('submit', () => {
+                const submitButton = applicationForm.querySelector('.account-submit[type="submit"]');
+                if (submitButton) {
+                    submitButton.disabled = true;
+                    submitButton.textContent = 'Sending your application...';
+                }
+            });
+
+            applicationForm.addEventListener('submit', (event) => {
+                const submitButton = applicationForm.querySelector('.account-submit[type="submit"]');
+                if (submitButton) {
+                    submitButton.disabled = true;
+                    submitButton.textContent = 'Sending your application...';
+                }
+            });
+
+            updateProgress();
+        }
+
+        showStep('details');
+    </script>
+    <script src="remember-last-page.js"></script>
+    <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=6JgHgXhdfRSk"></script>
+</body>
+</html>

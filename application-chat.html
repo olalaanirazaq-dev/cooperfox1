@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Application received | Cooper Fox Realty</title>
+    <link rel="icon" type="image/png" href="cooper%20fox%20icon.png" />
+    <link rel="shortcut icon" type="image/png" href="cooper%20fox%20icon.png" />
+    <link rel="apple-touch-icon" href="cooper%20fox%20icon.png" />
+    <link rel="stylesheet" href="cooper-fox-stylesheet.css" />
+</head>
+<body>
+    <main class="account-page">
+        <section class="account-card application-dashboard" aria-labelledby="chatTitle">
+            <a class="account-brand" href="index.html" aria-label="Back to Cooper Fox Realty home">
+                <span class="account-mark">CF</span>
+                <span>Cooper Fox Realty</span>
+            </a>
+
+            <div class="account-heading">
+                <p class="account-kicker">Application received</p>
+                <h1 id="chatTitle">Let’s talk about your application.</h1>
+                <p>Your application is saved. Cooper Fox will reply in the chat with the next steps for the $70 refundable application fee.</p>
+            </div>
+
+            <div id="applicationSummary" class="application-summary" aria-live="polite"></div>
+
+            <details class="application-details">
+                <summary>View submitted application details</summary>
+                <div id="applicationDetails" class="application-details-grid"></div>
+            </details>
+
+            <div class="account-status">
+                <strong>No payment app is required here.</strong><br />
+                Wait for Cooper Fox to provide payment instructions in the chat. Never send card numbers, passwords, or security codes in chat.
+            </div>
+
+            <div class="application-chat-log">
+                <div class="chat-message agent">
+                    <strong>Cooper Fox</strong>
+                    <p>Thanks for your application. Please open the chat widget and message us when you are ready for the application-fee instructions.</p>
+                </div>
+            </div>
+
+            <div class="chat-handoff">
+                <h2>Chat with Landlord</h2>
+                <p id="landlordChatStatus">Your application is ready. Choose a question below or open the chat to ask about your application and the payment process.</p>
+                <div class="chat-prompts" aria-label="Suggested chat questions">
+                    <button type="button" data-chat-prompt="I submitted my application. What are the next steps?">What happens next?</button>
+                    <button type="button" data-chat-prompt="Please explain the $70 refundable application fee and how I can pay it.">Ask about the fee</button>
+                    <button type="button" data-chat-prompt="Can you confirm that you received my application?">Confirm my application</button>
+                </div>
+                <button class="account-submit" type="button" id="openLandlordChat">Open Landlord chat</button>
+            </div>
+
+            <p class="account-footer">
+                Reference: <strong id="applicationReference">Pending</strong> · <a href="index.html">Back to home</a>
+            </p>
+        </section>
+    </main>
+
+    <style>
+        .chat-handoff {
+            margin: 22px 0 8px;
+            padding: 20px;
+            border: 1px solid #dbe4df;
+            border-radius: 8px;
+            background: #f4f7f5;
+        }
+
+        .chat-handoff h2 {
+            margin: 0 0 8px;
+            color: #162522;
+            font-family: Georgia, serif;
+            font-size: 1.35rem;
+            font-weight: 400;
+        }
+
+        .chat-handoff p {
+            margin: 0 0 16px;
+            color: #65746d;
+            font-family: Arial, sans-serif;
+            font-size: 0.86rem;
+            line-height: 1.5;
+        }
+
+        .chat-prompts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 0 0 16px;
+        }
+
+        .chat-prompts button {
+            border: 1px solid #cbdad3;
+            border-radius: 999px;
+            padding: 9px 12px;
+            color: #153128;
+            background: #fff;
+            cursor: pointer;
+            font: 700 0.74rem Arial, sans-serif;
+        }
+
+        .chat-prompts button:hover,
+        .chat-prompts button:focus-visible {
+            border-color: #0d7a5f;
+            background: #edf8f2;
+        }
+
+        .application-details {
+            margin: 18px 0;
+            border: 1px solid #dbe4df;
+            border-radius: 8px;
+            background: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        .application-details summary {
+            padding: 15px 17px;
+            color: #153128;
+            cursor: pointer;
+            font-size: 0.86rem;
+            font-weight: 700;
+        }
+
+        .application-details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            padding: 0 17px 17px;
+        }
+
+        .application-detail {
+            display: grid;
+            gap: 4px;
+            padding-top: 11px;
+            border-top: 1px solid #e8eeeb;
+        }
+
+        .application-detail span {
+            color: #65746d;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .application-detail strong {
+            color: #162522;
+            font-size: 0.86rem;
+            font-weight: 400;
+            overflow-wrap: anywhere;
+        }
+
+        /* Landlord Chat Modal Styles */
+        .landlord-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .landlord-modal.active {
+            display: flex;
+        }
+
+        .landlord-chat-box {
+            background: #fff;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            height: 600px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .landlord-chat-header {
+            background: #0d7a5f;
+            color: #fff;
+            padding: 16px;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .landlord-chat-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .landlord-chat-close {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.5rem;
+            padding: 0;
+        }
+
+        .landlord-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            background: #f9f9f9;
+        }
+
+        .landlord-message {
+            margin-bottom: 12px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .landlord-message.user {
+            background: #0d7a5f;
+            color: #fff;
+            margin-left: auto;
+            max-width: 85%;
+            text-align: right;
+        }
+
+        .landlord-message.agent {
+            background: #e8f0ed;
+            color: #162522;
+            margin-right: auto;
+            max-width: 85%;
+        }
+
+        .landlord-message strong {
+            display: block;
+            font-size: 0.8rem;
+            margin-bottom: 4px;
+        }
+
+        .landlord-chat-input {
+            padding: 12px;
+            border-top: 1px solid #dbe4df;
+            display: flex;
+            gap: 8px;
+        }
+
+        .landlord-chat-input input {
+            flex: 1;
+            border: 1px solid #dbe4df;
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+
+        .landlord-chat-input button {
+            background: #0d7a5f;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .landlord-chat-input button:hover {
+            background: #0a5a47;
+        }
+
+        @media (max-width: 560px) {
+            .application-details-grid { grid-template-columns: 1fr; }
+            
+            .landlord-chat-box {
+                width: 95%;
+                height: 80vh;
+            }
+        }
+    </style>
+
+    <div id="landlordModal" class="landlord-modal">
+        <div class="landlord-chat-box">
+            <div class="landlord-chat-header">
+                <h3>💬 Landlord Chat</h3>
+                <button class="landlord-chat-close" id="closeLandlordChat" aria-label="Close chat">&times;</button>
+            </div>
+            <div class="landlord-chat-messages" id="landlordMessages"></div>
+            <div class="landlord-chat-input">
+                <input 
+                    type="text" 
+                    id="landlordChatInput" 
+                    placeholder="Type your message here..." 
+                    autocomplete="off"
+                />
+                <button id="landlordChatSend" aria-label="Send message">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Application data loading
+        const params = new URLSearchParams(window.location.search);
+        const requestedId = params.get('id');
+        const activeApplication = JSON.parse(localStorage.getItem('cooperFoxActiveApplication') || 'null');
+        const savedApplications = JSON.parse(localStorage.getItem('cooperFoxApplications') || '[]');
+        const application = savedApplications.find((item) => item.id === requestedId) || activeApplication;
+        const summary = document.getElementById('applicationSummary');
+        const reference = document.getElementById('applicationReference');
+        const details = document.getElementById('applicationDetails');
+
+        if (application) {
+            const property = application.Property || 'Property application';
+            const location = application.City || 'Location pending';
+            const price = application.Price || 'Price pending';
+            summary.innerHTML = `<strong>${property}</strong><span>${location} · ${price}</span><span>Application status: ${application.applicationStatus || 'Received'}</span>`;
+            reference.textContent = application.id || 'Pending';
+            const detailLabels = {
+                Name: 'Full name', Email: 'Email', Phone: 'Phone', Address: 'Current address',
+                MoveDate: 'Preferred move-in date', Employment: 'Employment or income', Income: 'Monthly income',
+                Occupants: 'Occupants', Pets: 'Pets', CreditScore: 'Credit score', MonthlySalary: 'Monthly salary',
+                Message: 'Message'
+            };
+            details.innerHTML = Object.entries(detailLabels).map(([key, label]) => {
+                const value = application[key] || 'Not provided';
+                return `<div class="application-detail"><span>${label}</span><strong>${value}</strong></div>`;
+            }).join('');
+        } else {
+            summary.innerHTML = '<strong>Application submitted</strong><span>Your application reference is being prepared.</span>';
+            details.innerHTML = '<p class="form-help">Application details are available after submitting this form in the same browser.</p>';
+        }
+
+        const welcomeMessage = 'Hello! Send us a message and Cooper Fox will reply as soon as possible.';
+
+        // Landlord chat modal functions
+        const modal = document.getElementById('landlordModal');
+        const openBtn = document.getElementById('openLandlordChat');
+        const closeBtn = document.getElementById('closeLandlordChat');
+        const messagesDiv = document.getElementById('landlordMessages');
+        const inputField = document.getElementById('landlordChatInput');
+        const sendBtn = document.getElementById('landlordChatSend');
+        const landlordChatStatus = document.getElementById('landlordChatStatus');
+
+        function openLandlordChat() {
+            modal.classList.add('active');
+            inputField.focus();
+            
+            // Clear previous messages and show welcome
+            messagesDiv.innerHTML = '';
+            const welcomeMsg = document.createElement('div');
+            welcomeMsg.className = 'landlord-message agent';
+            welcomeMsg.innerHTML = `<strong>Cooper Fox</strong><br/>${welcomeMessage}`;
+            messagesDiv.appendChild(welcomeMsg);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function closeLandlordChat() {
+            modal.classList.remove('active');
+        }
+
+        function sendLandlordMessage() {
+            const message = inputField.value.trim();
+            if (!message) return;
+
+            // Add user message to chat
+            const userMsg = document.createElement('div');
+            userMsg.className = 'landlord-message user';
+            userMsg.textContent = message;
+            messagesDiv.appendChild(userMsg);
+
+            // Clear input
+            inputField.value = '';
+            inputField.focus();
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        openBtn?.addEventListener('click', openLandlordChat);
+        closeBtn?.addEventListener('click', closeLandlordChat);
+        sendBtn?.addEventListener('click', sendLandlordMessage);
+        inputField?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendLandlordMessage();
+        });
+
+        // Quick prompt buttons
+        document.querySelectorAll('[data-chat-prompt]').forEach((button) => {
+            button.addEventListener('click', () => {
+                openLandlordChat();
+                const prompt = button.dataset.chatPrompt;
+                inputField.value = prompt;
+                setTimeout(() => sendLandlordMessage(), 200);
+            });
+        });
+
+        landlordChatStatus.textContent = welcomeMessage;
+    </script>
+</body>
+</html>

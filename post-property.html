@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post a property | Cooper Fox Realty</title>
+    <link rel="icon" type="image/png" href="cooper%20fox%20icon.png" />
+    <link rel="shortcut icon" type="image/png" href="cooper%20fox%20icon.png" />
+    <link rel="apple-touch-icon" href="cooper%20fox%20icon.png" />
+    <link rel="stylesheet" href="cooper-fox-stylesheet.css" />
+</head>
+<body>
+    <main class="account-page">
+        <section class="account-card post-property-card" aria-labelledby="postTitle">
+            <a class="account-brand" href="index.html"><span class="account-mark">CF</span><span>Cooper Fox Realty</span></a>
+            <div class="account-heading">
+                <p class="account-kicker">Landlord and agent workspace</p>
+                <h1 id="postTitle">Post a property</h1>
+                <p>Add a clear listing so renters can view the home, ask questions, and apply.</p>
+            </div>
+
+            <div id="accountStatus" class="account-status" aria-live="polite"></div>
+
+            <form id="propertyForm" class="account-form">
+                <div class="form-section">
+                    <p class="account-kicker">Posting profile</p>
+                    <label for="posterRole">I am posting as</label>
+                    <select id="posterRole" required>
+                        <option>Landlord</option>
+                        <option>Real estate agent</option>
+                        <option>Property manager</option>
+                    </select>
+
+                    <label for="posterName">Your name or company</label>
+                    <input id="posterName" type="text" autocomplete="organization" required />
+
+                    <label for="posterContact">Contact email or phone</label>
+                    <input id="posterContact" type="text" required />
+
+                    <label for="textingNumber">Texting number for renters</label>
+                    <input id="textingNumber" type="tel" placeholder="(346) 316-3488" required />
+                </div>
+
+                <div class="form-section">
+                    <p class="account-kicker">Listing details</p>
+                    <label for="propertyTitle">Property title</label>
+                    <input id="propertyTitle" type="text" placeholder="Willow Glen bungalow" required />
+
+                    <div class="form-row">
+                        <label for="propertyCity">City<input id="propertyCity" type="text" placeholder="San Jose" required /></label>
+                        <label for="propertyState">State<select id="propertyState">
+                            <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option><option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option><option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option><option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option><option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option><option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option><option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option><option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option><option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option><option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option>
+                        </select></label>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="propertyPrice" id="priceLabel">Monthly rent<input id="propertyPrice" type="number" min="0" step="50" placeholder="3950" required /></label>
+                        <label for="propertyType">Property type<select id="propertyType"><option>House</option><option>Apartment</option><option>Condo</option><option>Townhome</option><option>Studio</option></select></label>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="propertyAddress">Street address<input id="propertyAddress" type="text" placeholder="2258 Cherry Ave" /></label>
+                        <label for="propertyZip">ZIP code<input id="propertyZip" type="text" placeholder="95125" /></label>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="propertyStatus">Status<select id="propertyStatus">
+                            <option>For Rent</option>
+                            <option>For Sale</option>
+                            <option>Available</option>
+                            <option>Pending</option>
+                            <option>Rented</option>
+                            <option>Sold</option>
+                            <option>Draft</option>
+                        </select></label>
+                        <label for="propertyMode">Publishing mode<select id="propertyMode">
+                            <option value="published">Published</option>
+                            <option value="draft">Draft</option>
+                            <option value="pending">Pending review</option>
+                        </select></label>
+                    </div>
+
+                    <label for="propertyDetails">Property details</label>
+                    <input id="propertyDetails" type="text" placeholder="3 bed • 2 bath • 1,850 sq ft" required />
+
+                    <label for="propertyDescription">Property description</label>
+                    <textarea id="propertyDescription" rows="4" placeholder="Describe the home, layout, quality, and neighborhood highlights"></textarea>
+
+                    <label>Amenities</label>
+                    <div class="check-grid" id="propertyAmenities">
+                        <label class="check-option"><input type="checkbox" value="Parking"> Parking</label>
+                        <label class="check-option"><input type="checkbox" value="Pool"> Pool</label>
+                        <label class="check-option"><input type="checkbox" value="Washer / Dryer"> Washer / Dryer</label>
+                        <label class="check-option"><input type="checkbox" value="Gym"> Gym</label>
+                        <label class="check-option"><input type="checkbox" value="Pet Friendly"> Pet Friendly</label>
+                        <label class="check-option"><input type="checkbox" value="Balcony"> Balcony</label>
+                        <label class="check-option"><input type="checkbox" value="Fenced Yard"> Fenced Yard</label>
+                        <label class="check-option"><input type="checkbox" value="Security"> Security</label>
+                        <label class="check-option"><input type="checkbox" value="Smart Home"> Smart Home</label>
+                    </div>
+
+                    <label>Utilities</label>
+                    <div class="check-grid" id="propertyUtilities">
+                        <label class="check-option"><input type="checkbox" value="Water"> Water</label>
+                        <label class="check-option"><input type="checkbox" value="Trash"> Trash</label>
+                        <label class="check-option"><input type="checkbox" value="Electricity"> Electricity</label>
+                        <label class="check-option"><input type="checkbox" value="Gas"> Gas</label>
+                        <label class="check-option"><input type="checkbox" value="Internet"> Internet</label>
+                        <label class="check-option"><input type="checkbox" value="Laundry"> Laundry</label>
+                        <label class="check-option"><input type="checkbox" value="Heating"> Heating</label>
+                        <label class="check-option"><input type="checkbox" value="Cooling"> Cooling</label>
+                    </div>
+
+                    <label for="propertySourceUrl">Listing URL / source</label>
+                    <input id="propertySourceUrl" type="url" placeholder="https://example.com/listing" />
+
+                    <label for="propertyPhotos">Property photos</label>
+                    <input id="propertyPhotos" type="file" accept="image/*,.heic,.heif,.avif,.tif,.tiff,.svg" multiple required />
+                    <div id="photoPreview" class="photo-preview" hidden></div>
+                    <p class="form-help">Choose up to 35 house photos. Photos stay in this browser while the site is running locally.</p>
+                </div>
+
+                <button class="account-submit" type="submit">Publish property</button>
+                <p id="propertyStatus" class="account-status" hidden></p>
+            </form>
+
+            <p class="account-footer"><a href="inquiries-local.html">View customer inquiries</a> · <a href="applications-local.html">View applications</a> · <a href="index.html">Back to home</a></p>
+        </section>
+    </main>
+
+    <style>
+        .post-property-card {
+            width: min(100%, 760px);
+        }
+
+        .photo-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+            gap: 12px;
+            padding: 14px;
+            border: 1px solid #e2dacc;
+            background: linear-gradient(180deg, #fffaf6, #fdf4ec);
+            border-radius: 12px;
+            margin-top: 10px;
+            align-items: stretch;
+        }
+
+        .photo-preview-tile {
+            position: relative;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            overflow: hidden;
+            background: #fff;
+            cursor: pointer;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 8px rgba(45, 38, 31, 0.10);
+            transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+        }
+
+        .photo-preview-tile:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(45, 38, 31, 0.16);
+        }
+
+        .photo-preview-tile img {
+            width: 100%;
+            height: 88px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .photo-preview-tile .photo-label {
+            width: 100%;
+            font-size: 11px;
+            padding: 5px 6px;
+            text-align: center;
+            background: #49382c;
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .photo-preview-tile .photo-description {
+            width: 100%;
+            font-size: 10px;
+            line-height: 1.35;
+            padding: 4px 6px;
+            background: #f8f2ea;
+            color: #49382c;
+            border-top: 1px solid #e2dacc;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .photo-preview-tile.selected {
+            border-color: #ba7a3a;
+            box-shadow: 0 0 0 2px rgba(186, 122, 58, 0.22), 0 8px 16px rgba(45, 38, 31, 0.16);
+        }
+
+        .check-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 8px 0 16px;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #e2dacc;
+            background: #fffaf5;
+        }
+
+        .check-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #49382c;
+            min-height: 34px;
+        }
+
+        .check-option input[type="checkbox"] {
+            accent-color: #ba7a3a;
+            width: 16px;
+            height: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <script>
+        const propertyForm = document.getElementById('propertyForm');
+        const propertyStatus = document.getElementById('propertyStatus');
+        const accountStatus = document.getElementById('accountStatus');
+        const propertyPhotos = document.getElementById('propertyPhotos');
+        const photoPreview = document.getElementById('photoPreview');
+        const propertyPrice = document.getElementById('propertyPrice');
+        const propertyStatusSelector = document.getElementById('propertyStatus');
+        const propertyPriceLabel = document.getElementById('priceLabel');
+        let currentUser = null;
+        let selectedCoverIndex = 0;
+
+        propertyStatusSelector.addEventListener('change', () => {
+            const isSale = propertyStatusSelector.value === 'For Sale';
+            propertyPriceLabel.innerHTML = isSale
+                ? 'House price<input id="propertyPrice" type="number" min="0" step="50" placeholder="395000" required />'
+                : 'Monthly rent<input id="propertyPrice" type="number" min="0" step="50" placeholder="3950" required />';
+            const currentPriceField = document.getElementById('propertyPrice');
+            if (currentPriceField) {
+                currentPriceField.value = propertyPrice ? propertyPrice.value : '';
+            }
+        });
+
+        function populatePhotoPreview() {
+            const files = Array.from(propertyPhotos.files || []);
+            photoPreview.innerHTML = '';
+
+            if (!files.length) {
+                photoPreview.hidden = true;
+                return;
+            }
+
+            photoPreview.hidden = false;
+            selectedCoverIndex = 0;
+
+            files.forEach((file, index) => {
+                const tile = document.createElement('div');
+                tile.className = 'photo-preview-tile' + (index === selectedCoverIndex ? ' selected' : '');
+                tile.dataset.index = String(index);
+
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.alt = file.name || `Property photo ${index + 1}`;
+
+                const label = document.createElement('div');
+                label.className = 'photo-label';
+                label.textContent = index === selectedCoverIndex ? 'Cover' : `Photo ${index + 1}`;
+
+                const description = document.createElement('div');
+                description.className = 'photo-description';
+                description.textContent = file.name || `Property photo ${index + 1}`;
+
+                tile.appendChild(img);
+                tile.appendChild(label);
+                tile.appendChild(description);
+                tile.addEventListener('click', () => {
+                    selectedCoverIndex = index;
+                    Array.from(photoPreview.children).forEach((child, childIndex) => {
+                        child.classList.toggle('selected', childIndex === selectedCoverIndex);
+                        const childLabel = child.querySelector('.photo-label');
+                        if (childLabel) childLabel.textContent = childIndex === selectedCoverIndex ? 'Cover' : `Photo ${childIndex + 1}`;
+                    });
+                });
+
+                photoPreview.appendChild(tile);
+            });
+        }
+
+        propertyPhotos.addEventListener('change', populatePhotoPreview);
+
+        async function resolveCurrentUser() {
+            try {
+                const localValue = JSON.parse(localStorage.getItem('copperFoxCurrentUser') || 'null');
+                if (localValue && localValue.email) return localValue;
+            } catch {
+                // Ignore malformed local storage data.
+            }
+
+            try {
+                const response = await fetch('session-status.php', { credentials: 'same-origin' });
+                if (!response.ok) return null;
+                const account = await response.json();
+                if (!account || !account.authenticated) return null;
+                const hydratedUser = { name: account.name || 'Cooper Fox member', email: account.email || '' };
+                localStorage.setItem('copperFoxCurrentUser', JSON.stringify(hydratedUser));
+                return hydratedUser;
+            } catch {
+                return null;
+            }
+        }
+
+        (async () => {
+            currentUser = await resolveCurrentUser();
+            if (currentUser) {
+                document.getElementById('posterName').value = currentUser.name || '';
+                document.getElementById('posterContact').value = currentUser.email || '';
+                accountStatus.innerHTML = `<strong>Signed in as ${currentUser.name || 'Cooper Fox member'}</strong><br>${currentUser.email || ''}`;
+            } else {
+                accountStatus.innerHTML = 'Posting as a guest. Guest submissions are currently available without an account.';
+            }
+        })();
+
+        async function uploadListingPhotos(files) {
+            if (!files.length) return [];
+
+            const formData = new FormData();
+            files.forEach((file) => formData.append('photos[]', file));
+
+            try {
+                const response = await fetch('upload-listing-images.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result && result.ok === true && Array.isArray(result.files) && result.files.length) {
+                        return result.files;
+                    }
+                }
+            } catch {
+                // Static Cloudflare Pages and file:// pages do not provide the PHP upload route.
+            }
+
+            return Promise.all(files.map((file) => new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(String(reader.result));
+                reader.onerror = () => reject(new Error(`Unable to read photo ${file.name || ''}.`));
+                reader.readAsDataURL(file);
+            })));
+        }
+
+        const normalizePhone = (value) => {
+            if (!value) return '';
+            const digits = String(value).replace(/\D/g, '');
+            if (!digits) return '';
+            if (digits.length === 10) return `+1${digits}`;
+            return `+${digits}`;
+        };
+
+        async function saveSharedListings(listings) {
+            try {
+                window.localStorage.setItem('copperFoxRentalListings', JSON.stringify(listings));
+            } catch {
+                // Ignore local storage write failures.
+            }
+
+            const payload = JSON.stringify(listings);
+            try {
+                const response = await fetch('./listings-sync.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: payload
+                });
+
+                if (response.ok) {
+                    const output = await response.json().catch(() => null);
+                    if (output && output.ok === true) return true;
+                }
+            } catch {
+                // Fall through to the Cloudflare Pages route.
+            }
+
+            try {
+                const response = await fetch('/api/listings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: payload
+                });
+                const output = await response.json().catch(() => null);
+                if (response.ok && output && (output.success === true || output.ok === true)) return true;
+                throw new Error((output && output.message) || `Listing storage failed with HTTP ${response.status}.`);
+            } catch (error) {
+                console.error('Shared listing save failed:', error);
+                throw error;
+            }
+        }
+
+        propertyForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const submitButton = propertyForm.querySelector('button[type="submit"]');
+            const files = [...document.getElementById('propertyPhotos').files].slice(0, 35);
+            if (!files.length) {
+                propertyStatus.textContent = 'Please choose at least one property photo.';
+                propertyStatus.hidden = false;
+                return;
+            }
+
+            submitButton.disabled = true;
+            submitButton.textContent = 'Publishing...';
+
+            try {
+                const priceValue = Number(document.getElementById('propertyPrice').value) || 0;
+                const isSale = (document.getElementById('propertyStatus').value || 'For Rent') === 'For Sale';
+                const uploadedGallery = await uploadListingPhotos(files);
+                const safeCoverIndex = Math.min(Math.max(selectedCoverIndex, 0), Math.max(uploadedGallery.length - 1, 0));
+                const amenities = Array.from(document.querySelectorAll('#propertyAmenities input[type="checkbox"]:checked')).map((input) => input.value);
+                const utilities = Array.from(document.querySelectorAll('#propertyUtilities input[type="checkbox"]:checked')).map((input) => input.value);
+                const listing = {
+                    title: document.getElementById('propertyTitle').value.trim(),
+                    price: isSale ? `$${priceValue.toLocaleString('en-US')}` : `$${priceValue.toLocaleString('en-US')}/mo`,
+                    priceValue,
+                    propertyType: document.getElementById('propertyType').value,
+                    status: document.getElementById('propertyStatus').value || 'For Rent',
+                    isDraft: (document.getElementById('propertyMode').value || 'published') === 'draft',
+                    mode: document.getElementById('propertyMode').value || 'published',
+                    details: document.getElementById('propertyDetails').value.trim(),
+                    description: document.getElementById('propertyDescription').value.trim(),
+                    city: document.getElementById('propertyCity').value.trim(),
+                    state: document.getElementById('propertyState').value,
+                    address: document.getElementById('propertyAddress').value.trim(),
+                    zipCode: document.getElementById('propertyZip').value.trim(),
+                    amenities,
+                    utilities,
+                    gallery: uploadedGallery,
+                    coverImage: uploadedGallery[safeCoverIndex] || uploadedGallery[0],
+                    postedBy: document.getElementById('posterName').value.trim(),
+                    posterRole: document.getElementById('posterRole').value,
+                    posterContact: document.getElementById('posterContact').value.trim(),
+                    contactPhone: normalizePhone(document.getElementById('textingNumber').value),
+                    textingNumber: normalizePhone(document.getElementById('textingNumber').value),
+                    sourceUrl: document.getElementById('propertySourceUrl').value.trim(),
+                    importSource: document.getElementById('propertySourceUrl').value.trim(),
+                    sourceName: 'Manual entry',
+                    postedByAccount: currentUser ? { name: currentUser.name || '', email: currentUser.email || '' } : null,
+                    postedAt: new Date().toISOString()
+                };
+
+                let savedListings = [];
+                try {
+                    const parsed = JSON.parse(localStorage.getItem('copperFoxRentalListings') || '[]');
+                    savedListings = Array.isArray(parsed) ? parsed : [];
+                } catch {
+                    savedListings = [];
+                }
+
+                const listings = savedListings.concat([listing]);
+                await saveSharedListings(listings);
+                propertyForm.reset();
+                submitButton.disabled = false;
+                submitButton.textContent = 'Publish property';
+                propertyStatus.textContent = 'Property published. It is now visible on the available homes page.';
+                propertyStatus.hidden = false;
+                propertyStatus.style.color = '';
+                propertyStatus.style.borderColor = '';
+            } catch (error) {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Publish property';
+                propertyStatus.textContent = 'Property could not be published. The upload or listing storage endpoint returned an error: ' + (error && error.message ? error.message : 'unknown error');
+                propertyStatus.hidden = false;
+                propertyStatus.style.color = '#a33';
+                propertyStatus.style.borderColor = '#f2b8b8';
+            }
+        });
+    </script>
+</body>
+</html>

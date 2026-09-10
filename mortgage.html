@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Explore mortgage planning and home financing guidance with Cooper Fox Realty." />
+  <title>Mortgage Planning | Cooper Fox Realty</title>
+  <link rel="icon" type="image/png" href="cooper%20fox%20icon.png" />
+  <link rel="shortcut icon" type="image/png" href="cooper%20fox%20icon.png" />
+  <link rel="apple-touch-icon" href="cooper%20fox%20icon.png" />
+  <link rel="stylesheet" href="mortgage.css" />
+  <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=6JgHgXhdfRSk"></script>
+</head>
+<body>
+  <header class="mortgage-header">
+    <a class="brand" href="index.html" aria-label="Cooper Fox Realty home"><span class="brand-mark">CF</span><span>Cooper Fox Realty</span></a>
+    <nav aria-label="Mortgage navigation"><a href="index.html#listings">Browse homes</a><a href="#calculator">Estimate payment</a><a href="#process">How it works</a></nav>
+    <button class="button button-small" id="mortgageChatButton" type="button">Talk to Realtor Cooper Fox</button>
+  </header>
+
+  <main>
+    <section class="mortgage-hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Mortgage planning with Cooper Fox Realty</p>
+        <h1>Make the numbers feel more manageable.</h1>
+        <p>Understand your buying range, compare a few financing paths, and move forward with local guidance from first conversation to closing.</p>
+        <div class="hero-actions"><a class="button" href="#calculator">Estimate my payment <span aria-hidden="true">&#8595;</span></a><a class="text-link" href="mailto:Coopermathewfoxhomes@realtyagent.com?subject=Home%20buying%20questions">Ask a question <span aria-hidden="true">&#8599;</span></a></div>
+      </div>
+      <div class="hero-note"><span class="note-label">Your planning note</span><strong>Start with a monthly number that feels comfortable.</strong><p>A payment estimate is a starting point, not a loan offer. We will help you understand the next step.</p><span class="note-line"></span><small>Cooper Fox Realty · Founded 2015</small></div>
+    </section>
+
+    <section class="calculator-section" id="calculator">
+      <div class="section-heading"><p class="eyebrow">A quick starting point</p><h2>Estimate your monthly payment.</h2><p>Adjust the numbers to see how purchase price, down payment, rate, and term shape the estimate.</p></div>
+      <div class="calculator-grid">
+        <form class="calculator" id="mortgageCalculator">
+          <label>Home price <output id="priceOutput">$400,000</output><input id="homePrice" type="range" min="100000" max="1500000" step="5000" value="400000" /></label>
+          <label>Down payment <output id="downOutput">$80,000</output><input id="downPayment" type="range" min="0" max="400000" step="5000" value="80000" /></label>
+          <label>Interest rate <output id="rateOutput">6.50%</output><input id="interestRate" type="range" min="2" max="10" step="0.05" value="6.5" /></label>
+          <label>Loan term <select id="loanTerm"><option value="30">30 years</option><option value="20">20 years</option><option value="15">15 years</option></select></label>
+        </form>
+        <div class="estimate"><span>Estimated principal + interest</span><strong id="paymentOutput">$2,023</strong><p>This estimate does not include taxes, insurance, HOA fees, or lender charges. Your lender provides the official terms.</p><a class="button" href="mailto:Coopermathewfoxhomes@realtyagent.com?subject=Mortgage%20payment%20estimate">Review my estimate</a></div>
+      </div>
+    </section>
+
+    <section class="paths section-shell"><div class="section-heading"><p class="eyebrow">Choose your starting point</p><h2>A financing path for the move ahead.</h2></div><div class="path-grid"><a href="mailto:Coopermathewfoxhomes@realtyagent.com?subject=First%20time%20buyer%20consultation"><span>01</span><h3>First home</h3><p>Build a clear plan for your first purchase and learn which numbers matter most.</p><strong aria-hidden="true">&#8599;</strong></a><a href="mailto:Coopermathewfoxhomes@realtyagent.com?subject=Move%20up%20home%20consultation"><span>02</span><h3>Next move</h3><p>Think through timing, equity, and the financing details behind a change of home.</p><strong aria-hidden="true">&#8599;</strong></a><a href="mailto:Coopermathewfoxhomes@realtyagent.com?subject=Investment%20property%20consultation"><span>03</span><h3>Investment property</h3><p>Discuss purchase assumptions and the market context behind an investment decision.</p><strong aria-hidden="true">&#8599;</strong></a></div></section>
+
+    <section class="process section-shell" id="process"><div class="section-heading"><p class="eyebrow">A clearer path forward</p><h2>Three conversations. One confident plan.</h2></div><ol><li><span>1</span><div><h3>Tell us the goal</h3><p>Share the property, timeline, and monthly range you have in mind.</p></div></li><li><span>2</span><div><h3>Review the numbers</h3><p>We help you compare scenarios and identify the questions for your lender.</p></div></li><li><span>3</span><div><h3>Move with clarity</h3><p>Tour the right homes and make an offer with a plan you understand.</p></div></li></ol></section>
+
+    <section class="contact-strip"><div><p class="eyebrow">Ready to talk it through?</p><h2>Bring your mortgage question to Cooper Fox.</h2></div><a class="button button-light" href="mailto:Coopermathewfoxhomes@realtyagent.com?subject=Mortgage%20planning%20conversation">Start a conversation <span aria-hidden="true">&#8599;</span></a></section>
+  </main>
+  <footer><div><a class="brand" href="index.html"><span class="brand-mark">CF</span><span>Cooper Fox Realty</span></a><p>Local guidance for renting, buying, selling, and managing property.</p><small>Founded 2015 · &#169; 2026 Cooper Fox Realty</small></div><div><span>Contact</span><a href="tel:+13463163488">346-316-3488</a><a href="mailto:Coopermathewfoxhomes@realtyagent.com">Email Cooper Fox</a></div></footer>
+  <script>
+    const price = document.getElementById('homePrice');
+    const down = document.getElementById('downPayment');
+    const rate = document.getElementById('interestRate');
+    const term = document.getElementById('loanTerm');
+    const money = (value) => `$${Math.round(value).toLocaleString()}`;
+    function updateEstimate() {
+      const loan = Math.max(0, Number(price.value) - Number(down.value));
+      const monthlyRate = Number(rate.value) / 100 / 12;
+      const months = Number(term.value) * 12;
+      const payment = monthlyRate ? loan * monthlyRate * (1 + monthlyRate) ** months / ((1 + monthlyRate) ** months - 1) : loan / months;
+      document.getElementById('priceOutput').textContent = money(price.value);
+      document.getElementById('downOutput').textContent = money(down.value);
+      document.getElementById('rateOutput').textContent = `${Number(rate.value).toFixed(2)}%`;
+      document.getElementById('paymentOutput').textContent = money(payment);
+    }
+    [price, down, rate, term].forEach((input) => input.addEventListener('input', updateEstimate));
+    updateEstimate();
+  </script>
+  <script>
+    const mortgageChatButton = document.getElementById('mortgageChatButton');
+    const openMortgageChat = () => {
+      const message = 'Hello Realtor Cooper Fox. I have a mortgage question and would like help understanding my payment estimate and next steps.';
+      try {
+        sessionStorage.setItem('chatway_property_context', message);
+      } catch (error) {
+        console.warn('Chatway context storage failed:', error);
+      }
+
+      const candidates = [
+        window.$chatway,
+        window.chatway,
+        window.Chatway,
+        window.chatwayWidget,
+        window.chatwayApi,
+        window.ChatwayWidget,
+        typeof window.chatway === 'function' ? window.chatway : null
+      ];
+
+      for (const candidate of candidates) {
+        if (!candidate) continue;
+
+        const methodNames = ['openChatwayWidget', 'openChatWidget', 'openWidget', 'openChat', 'open'];
+        for (const methodName of methodNames) {
+          const method = typeof candidate === 'object' ? candidate[methodName] : null;
+          if (typeof method === 'function') {
+            try {
+              method.call(candidate);
+              return true;
+            } catch (error) {
+              console.warn('Mortgage Chatway open failed:', error);
+            }
+          }
+        }
+
+        if (typeof candidate === 'function') {
+          try {
+            candidate();
+            return true;
+          } catch (error) {
+            console.warn('Mortgage Chatway function failed:', error);
+          }
+        }
+      }
+
+      const popup = window.open('https://www.chatway.app', '_blank', 'noopener,noreferrer');
+      if (!popup) {
+        window.location.href = 'https://www.chatway.app';
+      }
+      return true;
+    };
+
+    mortgageChatButton?.addEventListener('click', () => {
+      if (openMortgageChat()) return;
+      let attempts = 0;
+      const chatWait = window.setInterval(() => {
+        attempts += 1;
+        if (openMortgageChat() || attempts >= 20) window.clearInterval(chatWait);
+      }, 250);
+    });
+  </script>
+  <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=6JgHgXhdfRSk"></script>
+</body>
+</html>

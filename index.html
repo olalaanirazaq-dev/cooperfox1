@@ -1,0 +1,2808 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cooper Fox Realty</title>
+    <meta name="description" content="Find available rental homes, property tours, and local guidance from Cooper Fox Realty." />
+    <meta property="og:title" content="Cooper Fox Realty | Rental Listings" />
+    <meta property="og:description" content="Browse available rental homes and property tours from Cooper Fox Realty." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://cooperfoxrealty.com/" />
+    <meta property="og:image" content="https://cooperfoxrealty.com/cooper%20fox%20icon.png" />
+    <meta property="og:image:alt" content="Cooper Fox Realty logo" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Cooper Fox Realty | Rental Listings" />
+    <meta name="twitter:description" content="Browse available rental homes and property tours from Cooper Fox Realty." />
+    <meta name="twitter:image" content="https://cooperfoxrealty.com/cooper%20fox%20icon.png" />
+    <link rel="icon" type="image/png" href="cooper%20fox%20icon.png" />
+    <link rel="shortcut icon" type="image/png" href="cooper%20fox%20icon.png" />
+    <link rel="apple-touch-icon" href="cooper%20fox%20icon.png" />
+    <link rel="stylesheet" href="cooper-fox-stylesheet.css" />
+    <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=6JgHgXhdfRSk"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-messaging-compat.js"></script>
+    <script>
+      async function registerWebPush() {
+        if (!('serviceWorker' in navigator) || !('Notification' in window) || !window.firebase) {
+          return;
+        }
+
+        try {
+          const configResponse = await fetch('push-config.php', { cache: 'no-store' });
+          const config = await configResponse.json();
+          if (!config.apiKey || config.apiKey.startsWith('YOUR_') || !config.vapidKey || config.vapidKey.startsWith('YOUR_')) return;
+
+          if (!firebase.apps.length) firebase.initializeApp(config);
+          const messaging = firebase.messaging();
+          await navigator.serviceWorker.register('firebase-messaging-sw.js');
+          const serviceWorkerRegistration = await navigator.serviceWorker.ready;
+          serviceWorkerRegistration.active?.postMessage({ type: 'firebase-config', config });
+          const token = await messaging.getToken({ vapidKey: config.vapidKey, serviceWorkerRegistration });
+          if (!token) return;
+
+          await fetch('push-subscribe.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token })
+          });
+        } catch (error) {
+          console.error('Push notification setup failed:', error);
+        }
+      }
+
+      async function enableWebNotifications() {
+        if (!('Notification' in window)) {
+          return;
+        }
+
+        if (Notification.permission === 'default') {
+          const permission = await Notification.requestPermission();
+          if (permission === 'granted') {
+            await registerWebPush();
+          }
+          return;
+        }
+
+        if (Notification.permission === 'granted') {
+          await registerWebPush();
+        }
+      }
+
+      window.addEventListener('load', () => {
+        const askBtn = document.getElementById('enableNotificationsBtn');
+        if (askBtn) {
+          askBtn.addEventListener('click', enableWebNotifications);
+        }
+        enableWebNotifications();
+      });
+    </script>
+  </head>
+  <body>
+    <header class="hero">
+      <video
+        id="heroVideo"
+        class="hero-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+      >
+        <source src="coopermathew video.mp4" type="video/mp4" />
+      </video>
+
+      <div class="hero-overlay"></div>
+
+      <nav class="topbar" aria-label="Primary navigation">
+        <a class="brand-wrap" href="index.html" aria-label="Cooper Fox Realty home">
+          <div class="brand-mark">CF</div>
+          <span class="brand-name">Cooper Fox Realty</span>
+        </a>
+
+        <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">Menu</button>
+
+        <div class="main-nav">
+          <a href="#listings">Buy</a>
+          <a class="active" href="#listings">Rent</a>
+          <a href="#listings">Sell</a>
+          <a href="mortgage.html">Mortgage</a>
+          <a href="#about">Agent Finder</a>
+          <a href="rental-manager.html">Manage Rentals</a>
+        </div>
+
+        <div class="nav-actions">
+          <div id="userProfileCard" role="link" tabindex="0" aria-label="Open your profile" title="Open your profile" onclick="window.location.href='profile-local.html';" onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); window.location.href='profile-local.html'; }" style="display:none; align-items:center; gap:10px; padding:8px 12px; border-radius:999px; background:rgba(14,19,26,0.7); border:1px solid rgba(255,255,255,0.12); box-shadow:0 12px 28px rgba(0,0,0,0.16); backdrop-filter:blur(8px);">
+            <div style="width:30px; height:30px; border-radius:50%; display:grid; place-items:center; font-weight:800; background:linear-gradient(135deg,#d8bd84,#f0e3c2); color:#121821; font-size:0.72rem;">CF</div>
+            <div style="display:flex; flex-direction:column; line-height:1.1; min-width:0;">
+              <span id="profileName" style="font-size:0.73rem; font-weight:700; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:140px;">Welcome</span>
+              <span id="profileEmail" style="font-size:0.62rem; color:rgba(255,255,255,0.72); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:140px;">user@example.com</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <a href="profile-local.html" style="font-size:0.72rem; color:#d8bd84; text-decoration:none; font-weight:700;">Profile</a>
+              <button type="button" onclick="signOutCurrentUser()" style="border:1px solid rgba(255,255,255,0.18); background:transparent; color:#fff; border-radius:999px; padding:5px 10px; font-size:0.66rem; cursor:pointer;">Sign out</button>
+            </div>
+          </div>
+          <button id="inboxQuickButton" class="inbox-quick-button" type="button" aria-label="Open live inbox">
+            Inbox
+            <span class="inbox-badge">0</span>
+          </button>
+          <button id="enableNotificationsBtn" class="inbox-quick-button" type="button">Enable notifications</button>
+          <div class="social-links" aria-label="Property tour videos">
+            <a class="social-label" href="https://www.tiktok.com/@coopermathewfox" target="_blank" rel="noopener noreferrer">Tour videos</a>
+            <a class="social-link california" href="https://www.tiktok.com/@coopermathewfox" target="_blank" rel="noopener noreferrer" title="California property tours"><span>CA</span> California Tour</a>
+            <a class="social-link north-carolina" href="https://lite.tiktok.com/t/ZT9kw4T2w5BsR-4ipFy/" target="_blank" rel="noopener noreferrer" title="North Carolina property tours"><span>NC</span> North Carolina Tour</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="hero-content">
+        <p class="eyebrow">Cooper Fox Realty rentals</p>
+        <h1>Find a home that fits your life.</h1>
+
+        <div class="search-panel">
+          <div class="tab-row">
+            <a class="tab" href="#listings">Buy</a>
+            <a class="tab active" href="#listings">Rent</a>
+            <a class="tab" href="#listings">Sell</a>
+          </div>
+
+          <div class="search-row">
+            <div class="search-input-wrap">
+              <span class="search-icon" aria-hidden="true"></span>
+              <input id="locationSearch" type="search" placeholder="Address, city, neighborhood, or ZIP" aria-label="Search by address or area" />
+            </div>
+            <button id="searchButton" class="search-button" type="button"><span>Search</span></button>
+          </div>
+        </div>
+        <a class="tour-jump" href="#videoTours">Watch property video tours</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="featured">
+        <div class="section-heading" id="listings">
+          <p>Available rentals</p>
+          <h2>Homes selected for your next move</h2>
+        </div>
+
+        <div class="filters-bar">
+          <input id="cityFilter" list="cityOptions" type="search" placeholder="Any city" />
+          <datalist id="cityOptions">
+            <option value="San Jose"></option>
+            <option value="Cupertino"></option>
+            <option value="Los Gatos"></option>
+            <option value="Charlotte"></option>
+            <option value="Raleigh"></option>
+            <option value="Durham"></option>
+            <option value="Greensboro"></option>
+            <option value="Wilmington"></option>
+          </datalist>
+          <select id="stateFilter">
+            <option value="all">All U.S. states</option>
+            <option value="Alabama">Alabama</option><option value="Alaska">Alaska</option><option value="Arizona">Arizona</option><option value="Arkansas">Arkansas</option><option value="California">California</option><option value="Colorado">Colorado</option><option value="Connecticut">Connecticut</option><option value="Delaware">Delaware</option><option value="Florida">Florida</option><option value="Georgia">Georgia</option><option value="Hawaii">Hawaii</option><option value="Idaho">Idaho</option><option value="Illinois">Illinois</option><option value="Indiana">Indiana</option><option value="Iowa">Iowa</option><option value="Kansas">Kansas</option><option value="Kentucky">Kentucky</option><option value="Louisiana">Louisiana</option><option value="Maine">Maine</option><option value="Maryland">Maryland</option><option value="Massachusetts">Massachusetts</option><option value="Michigan">Michigan</option><option value="Minnesota">Minnesota</option><option value="Mississippi">Mississippi</option><option value="Missouri">Missouri</option><option value="Montana">Montana</option><option value="Nebraska">Nebraska</option><option value="Nevada">Nevada</option><option value="New Hampshire">New Hampshire</option><option value="New Jersey">New Jersey</option><option value="New Mexico">New Mexico</option><option value="New York">New York</option><option value="North Carolina">North Carolina</option><option value="North Dakota">North Dakota</option><option value="Ohio">Ohio</option><option value="Oklahoma">Oklahoma</option><option value="Oregon">Oregon</option><option value="Pennsylvania">Pennsylvania</option><option value="Rhode Island">Rhode Island</option><option value="South Carolina">South Carolina</option><option value="South Dakota">South Dakota</option><option value="Tennessee">Tennessee</option><option value="Texas">Texas</option><option value="Utah">Utah</option><option value="Vermont">Vermont</option><option value="Virginia">Virginia</option><option value="Washington">Washington</option><option value="West Virginia">West Virginia</option><option value="Wisconsin">Wisconsin</option><option value="Wyoming">Wyoming</option>
+          </select>
+          <select id="propertyTypeFilter" aria-label="Filter by property type">
+            <option value="all">All property types</option>
+            <option value="Apartment">Apartments</option>
+            <option value="House">Houses</option>
+            <option value="Condo">Condos</option>
+            <option value="Townhome">Townhomes</option>
+            <option value="Studio">Studios</option>
+          </select>
+          <select id="priceFilter">
+            <option value="all">All monthly rents</option>
+            <option value="300-650">$300 - $650/mo</option>
+            <option value="700-1000">$700 - $1,000/mo</option>
+            <option value="800-1200">$800 - $1,200/mo</option>
+            <option value="1200-1500">$1,200 - $1,500/mo</option>
+            <option value="1500-2000">$1,500 - $2,000/mo</option>
+            <option value="1800-2500">$1,800 - $2,500/mo</option>
+            <option value="2500-3000">$2,500 - $3,000/mo</option>
+            <option value="3000-4000">$3,000 - $4,000/mo</option>
+            <option value="4000-6000">$4,000 - $6,000/mo</option>
+            <option value="6000-7500">$6,000 - $7,500/mo</option>
+          </select>
+          <input id="minPriceFilter" type="number" min="0" step="50" placeholder="Min rent" aria-label="Minimum monthly rent" />
+          <input id="maxPriceFilter" type="number" min="0" step="50" placeholder="Max rent" aria-label="Maximum monthly rent" />
+          <select id="sortFilter" aria-label="Sort listings">
+            <option value="featured">Sort: Featured</option>
+            <option value="price-low">Price: Low to high</option>
+            <option value="price-high">Price: High to low</option>
+            <option value="city">City: A to Z</option>
+          </select>
+          <button id="resetFilters" type="button">Reset</button>
+        </div>
+        <p class="results-count" id="resultsCount" aria-live="polite"></p>
+
+        <div class="results-layout">
+          <div class="card-grid" id="listingsContainer"></div>
+          <div class="pagination-controls" id="paginationControls">
+            <button id="prevPageBtn" type="button" class="pagination-btn" aria-label="Previous page">
+              <span>←</span>
+              <span>Previous</span>
+            </button>
+            <span id="pageInfo" class="page-info"></span>
+            <button id="nextPageBtn" type="button" class="pagination-btn" aria-label="Next page">
+              <span>Next</span>
+              <span>→</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="video-tours" id="videoTours">
+        <div class="section-heading">
+          <p>Watch before you visit</p>
+          <h2>Property video tours</h2>
+        </div>
+        <div class="video-grid" id="tiktokVideos"></div>
+      </section>
+
+      <section class="highlight-card">
+        <div class="highlight-image"></div>
+        <div class="highlight-content">
+          <p class="eyebrow dark">Featured rental</p>
+          <h2>Modern home with valley views</h2>
+          <p>
+            4 bed • 3 bath • 2,850 sq ft • private outdoor entertainment area
+          </p>
+          <div class="highlight-meta">
+            <span>$5,400/mo</span>
+            <button>Schedule a viewing</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats-strip">
+        <div class="stat-item">
+          <strong>1.2K+</strong>
+          <span>homes rented</span>
+        </div>
+        <div class="stat-item">
+          <strong>98%</strong>
+          <span>client satisfaction</span>
+        </div>
+        <div class="stat-item">
+          <strong>24 hrs</strong>
+          <span>average response time</span>
+        </div>
+        <div class="stat-item">
+          <strong>Top 1%</strong>
+          <span>local agents</span>
+        </div>
+      </section>
+
+      <section class="benefits">
+        <div class="benefits-copy">
+          <p class="eyebrow dark">Why choose us</p>
+          <h2>Expert guidance for every move.</h2>
+          <p>
+            From finding the right neighborhood to signing the lease, we make renting
+            a home simple, clear, and personal.
+          </p>
+        </div>
+
+        <div class="benefit-list">
+          <article class="benefit-card">
+            <span class="benefit-icon">✓</span>
+            <div>
+              <h3>Data-driven pricing</h3>
+              <p>Clear monthly pricing and neighborhood insight before you apply.</p>
+            </div>
+          </article>
+
+          <article class="benefit-card">
+            <span class="benefit-icon">★</span>
+            <div>
+              <h3>Local expertise</h3>
+              <p>Deep roots in San Jose, Cupertino, and the surrounding Bay Area.</p>
+            </div>
+          </article>
+
+          <article class="benefit-card">
+            <span class="benefit-icon">↗</span>
+            <div>
+              <h3>End-to-end support</h3>
+              <p>From tours to applications and move-in, we keep every detail moving.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="agent-profile" id="about">
+        <div class="agent-profile-photo">
+          <img src="cooper fox pics.jpeg" alt="Cooper Fox, commercial real estate agent" />
+        </div>
+        <div class="agent-profile-copy">
+          <p class="eyebrow dark">Meet your agent</p>
+          <h2>Cooper Fox</h2>
+          <p class="agent-role">Commercial Agent</p>
+          <p>
+            Cooper is a commercial-focused agent whose primary services are investment
+            sales, landlord representation, and tenant representation. His underwriting
+            background helps investors, owners, and tenants make informed real estate
+            decisions and maximize value.
+          </p>
+          <p>
+            Born and raised in Sonoma County, Cooper brings an in-depth understanding of
+            the area's geography and the pulse of its market.
+          </p>
+
+          <div class="agent-details">
+            <div>
+              <h3>California license</h3>
+              <p>DRE ID 02208039 · Salesperson</p>
+              <a href="https://www2.dre.ca.gov/publicasp/pplinfo.asp?License_id=02208039" target="_blank" rel="noopener noreferrer">Verify license with California DRE ↗</a>
+            </div>
+            <div>
+              <h3>Contact</h3>
+              <div class="contact-links">
+                <a href="tel:+13463163488"><span>Office</span><strong>346-316-3488</strong></a>
+                <a href="sms:+18402225096"><span>Text</span><strong>840-222-5096</strong></a>
+                <a class="email-link" href="mailto:Coopermathewfoxhomes@realtyagent.com"><span>Email</span><strong>Coopermathewfoxhomes@realtyagent.com</strong></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="reviews-section" id="reviews">
+        <div class="section-heading reviews-heading">
+          <p>Cooper Fox client stories</p>
+          <h2>Local guidance for confident moves.</h2>
+        </div>
+        <div class="reviews-grid">
+          <article class="review-card">
+            <div class="review-stars" data-rating="4" aria-label="4 out of 5 stars">★★★★☆</div>
+            <blockquote>“We were looking for a rental that felt like home, not just another listing. The neighborhood guidance helped us find the right place for our family.”</blockquote>
+            <img class="review-property-photo" src="uploads/listing-09b31b1d5ec4c831.webp" alt="Cooper Fox property review" loading="lazy" />
+            <div class="review-author">
+              <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Maya R., reviewer" loading="lazy" />
+              <p><strong>Maya R.</strong><span>Renter in Santa Rosa</span></p>
+            </div>
+          </article>
+          <article class="review-card">
+            <div class="review-stars" data-rating="5" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote>“From our first tour to signing the lease, every question was answered clearly. We finally found a home that fit our budget and our everyday life.”</blockquote>
+            <div class="review-author">
+              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Daniel T., reviewer" loading="lazy" />
+              <p><strong>Daniel T.</strong><span>Home renter in San Jose</span></p>
+            </div>
+          </article>
+          <article class="review-card">
+            <div class="review-stars" data-rating="3" aria-label="3 out of 5 stars">★★★☆☆</div>
+            <blockquote>“The local market insight made buying our first home feel possible. We understood our options and felt confident when it was time to make an offer.”</blockquote>
+            <div class="review-author">
+              <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Aisha K., reviewer" loading="lazy" />
+              <p><strong>Aisha K.</strong><span>Property client in Sonoma County</span></p>
+            </div>
+          </article>
+          <article class="review-card">
+            <div class="review-stars" data-rating="4" aria-label="4 out of 5 stars">★★★★☆</div>
+            <blockquote>“After months of searching, we found a rental we could genuinely see ourselves living in. The search was focused and much less stressful than we expected.”</blockquote>
+            <img class="review-property-photo" src="uploads/listing-0dc3bd914fb5bcaa.webp" alt="Cooper Fox property review" loading="lazy" />
+            <div class="review-author">
+              <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Jordan P., reviewer" loading="lazy" />
+              <p><strong>Jordan P.</strong><span>First-time renter in Cupertino</span></p>
+            </div>
+          </article>
+          <article class="review-card">
+            <div class="review-stars" data-rating="5" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote>“The communication was quick and practical. We knew what to expect at every stage of buying our home, from the tour through the final details.”</blockquote>
+            <div class="review-author">
+              <img src="https://randomuser.me/api/portraits/men/46.jpg" alt="Luis M., reviewer" loading="lazy" />
+              <p><strong>Luis M.</strong><span>Home buyer in Santa Rosa</span></p>
+            </div>
+          </article>
+          <article class="review-card">
+            <div class="review-stars" data-rating="4" aria-label="4 out of 5 stars">★★★★☆</div>
+            <blockquote>“We received honest advice about the numbers and the neighborhood, which helped us choose a home we are truly happy to own.”</blockquote>
+            <div class="review-author">
+              <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Priya S., reviewer" loading="lazy" />
+              <p><strong>Priya S.</strong><span>Investment client in California</span></p>
+            </div>
+          </article>
+          <article class="review-card">
+            <div class="review-stars" data-rating="5" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote>“The new place gave our family more room, calmer mornings, and a better daily rhythm. Cooper helped us feel prepared before every move.”</blockquote>
+            <div class="review-author">
+              <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="Elena M., reviewer" loading="lazy" />
+              <p><strong>Elena M.</strong><span>Family renter in Sonoma</span></p>
+            </div>
+          </article>
+          <article class="review-card">
+            <div class="review-stars" data-rating="3" aria-label="3 out of 5 stars">★★★☆☆</div>
+            <blockquote>“We loved the honest recommendations and the quick walkthrough. The process felt organized and respectful every step of the way.”</blockquote>
+            <div class="review-author">
+              <img src="https://randomuser.me/api/portraits/men/54.jpg" alt="Chris W., reviewer" loading="lazy" />
+              <p><strong>Chris W.</strong><span>Rental client in Santa Clara</span></p>
+            </div>
+          </article>
+          <article class="review-card">
+            <div class="review-stars" data-rating="4" aria-label="4 out of 5 stars">★★★★☆</div>
+            <blockquote>“The neighborhood fit and home shortlist were a big reason our lease search moved faster than expected.”</blockquote>
+            <div class="review-author">
+              <img src="https://randomuser.me/api/portraits/women/49.jpg" alt="Sofia L., reviewer" loading="lazy" />
+              <p><strong>Sofia L.</strong><span>Move-in client in Napa</span></p>
+            </div>
+          </article>
+          <article class="review-card">
+            <div class="review-stars" data-rating="4" aria-label="4 out of 5 stars">★★★★☆</div>
+            <blockquote>“The process stayed friendly and detailed from the first call to final paperwork. We felt supported without pressure.”</blockquote>
+            <img class="review-property-photo" src="uploads/listing-3afe21fffaf1f7cc.webp" alt="Cooper Fox property review" loading="lazy" />
+            <div class="review-author">
+              <img src="https://randomuser.me/api/portraits/men/71.jpg" alt="Kai R., reviewer" loading="lazy" />
+              <p><strong>Kai R.</strong><span>Seller in Marin County</span></p>
+            </div>
+          </article>
+          <article class="review-card">
+            <div class="review-stars" data-rating="5" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote>“The property search became a smooth process because the follow-up was consistent and the neighborhoods were explained clearly.”</blockquote>
+            <div class="review-author">
+              <img src="https://randomuser.me/api/portraits/men/12.jpg" alt="Luca D., reviewer" loading="lazy" />
+              <p><strong>Luca D.</strong><span>Buyer in Oakland</span></p>
+            </div>
+          </article>
+          <article class="review-card">
+            <div class="review-stars" data-rating="5" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote>“We appreciated the walkthrough details and the clarity around pricing. Cooper made the search feel simple and personal.”</blockquote>
+            <img class="review-property-photo" src="uploads/listing-38680d7efcc2f425.webp" alt="Cooper Fox property review" loading="lazy" />
+            <div class="review-author">
+              <img src="https://randomuser.me/api/portraits/men/81.jpg" alt="Noah B., reviewer" loading="lazy" />
+              <p><strong>Noah B.</strong><span>Home buyer in Gilroy</span></p>
+            </div>
+          </article>
+          <article class="review-card">
+            <div class="review-stars" data-rating="5" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote>“We found a property that fit our family’s needs. The local market guidance and follow-up were excellent.”</blockquote>
+            <div class="review-author">
+              <img src="https://randomuser.me/api/portraits/women/24.jpg" alt="Tara P., reviewer" loading="lazy" />
+              <p><strong>Tara P.</strong><span>Rental family in San Jose</span></p>
+            </div>
+          </article>
+          <article class="review-card">
+            <div class="review-stars" data-rating="3" aria-label="3 out of 5 stars">★★★☆☆</div>
+            <blockquote>“The recommendations were thoughtful and the comparisons made planning easier. We would absolutely recommend the experience.”</blockquote>
+            <img class="review-property-photo" src="uploads/listing-4adf3466f3987239.webp" alt="Cooper Fox property review" loading="lazy" />
+            <div class="review-author">
+              <img src="https://randomuser.me/api/portraits/women/52.jpg" alt="Olivia G., reviewer" loading="lazy" />
+              <p><strong>Olivia G.</strong><span>Prospect in Monterey</span></p>
+            </div>
+          </article>
+          <article class="review-card">
+            <div class="review-stars" data-rating="4" aria-label="4 out of 5 stars">★★★★☆</div>
+            <blockquote>“The property shortlist felt tailored to our budget and commute. Every update and tour was easy to understand.”</blockquote>
+            <div class="review-author">
+              <img src="https://randomuser.me/api/portraits/women/79.jpg" alt="Carmen J., reviewer" loading="lazy" />
+              <p><strong>Carmen J.</strong><span>Renter in Santa Rosa</span></p>
+            </div>
+          </article>
+        </div>
+        <button class="load-more-reviews" id="loadMoreReviews" type="button">Show more reviews</button>
+      </section>
+
+      <section class="sell-section">
+        <div>
+          <p class="eyebrow dark">Ready for your next move?</p>
+          <h2>Sell your property with a clear plan.</h2>
+        </div>
+        <div>
+          <p>From pricing and preparation to qualified conversations, Cooper Fox Realty helps you move forward with practical local guidance.</p>
+          <a class="sell-button" href="mailto:Coopermathewfoxhomes@realtyagent.com?subject=Sell%20my%20property">Talk with Cooper Fox</a>
+        </div>
+      </section>
+
+      <section class="areas-section">
+        <div class="section-heading">
+          <p>Local coverage</p>
+          <h2>Explore the markets we know.</h2>
+        </div>
+        <div class="areas-grid">
+          <a href="#listings">San Jose rentals <span aria-hidden="true">&#8599;</span></a>
+          <a href="#listings">Cupertino rentals <span aria-hidden="true">&#8599;</span></a>
+          <a href="#listings">Los Gatos homes <span aria-hidden="true">&#8599;</span></a>
+          <a href="#listings">Charlotte rentals <span aria-hidden="true">&#8599;</span></a>
+          <a href="#listings">Raleigh rentals <span aria-hidden="true">&#8599;</span></a>
+          <a href="#listings">Wilmington homes <span aria-hidden="true">&#8599;</span></a>
+        </div>
+      </section>
+
+      <section class="admin-panel" id="adminPanel" hidden>
+        <div class="section-heading">
+          <p>Private workspace</p>
+          <h2>Manage your listings</h2>
+        </div>
+
+        <div class="admin-dashboard" aria-label="Dashboard overview">
+          <div class="dashboard-card">
+            <span>Total listings</span>
+            <strong id="totalListingsStat">0</strong>
+          </div>
+          <div class="dashboard-card">
+            <span>Active listings</span>
+            <strong id="activeListingsStat">0</strong>
+          </div>
+          <div class="dashboard-card">
+            <span>Draft listings</span>
+            <strong id="draftListingsStat">0</strong>
+          </div>
+          <div class="dashboard-card">
+            <span>Pending listings</span>
+            <strong id="pendingListingsStat">0</strong>
+          </div>
+          <div class="dashboard-card">
+            <span>Sold / Rented</span>
+            <strong id="closedListingsStat">0</strong>
+          </div>
+          <div class="dashboard-card">
+            <span>Property views</span>
+            <strong id="viewsListingsStat">0</strong>
+          </div>
+        </div>
+
+        <div class="admin-toolbar" aria-label="Quick actions">
+          <button type="button" class="quick-action" data-quick-action="new">Add listing</button>
+          <button type="button" class="quick-action secondary" data-quick-action="import">Import listing</button>
+          <button type="button" class="quick-action secondary" data-quick-action="drafts">Drafts</button>
+          <button type="button" class="quick-action secondary" data-quick-action="messages">Messages</button>
+        </div>
+
+        <form class="import-form" id="importListingForm" hidden>
+          <div class="admin-form-heading">
+            <h3>Import listing</h3>
+            <span>Authorized provider only</span>
+          </div>
+          <label>
+            Listing URL
+            <input id="importListingUrl" type="url" placeholder="https://www.zillow.com/..." />
+          </label>
+          <div class="form-row">
+            <label>
+              Source
+              <select id="importProvider">
+                <option value="zillow">Zillow</option>
+                <option value="mls">MLS / Bridge</option>
+                <option value="custom">Custom feed</option>
+              </select>
+            </label>
+            <label>
+              Listing ID
+              <input id="importListingId" type="text" placeholder="Optional" />
+            </label>
+          </div>
+          <div class="listing-form-actions">
+            <button class="admin-submit" type="submit">Import</button>
+            <button class="cancel-edit" type="button" id="cancelImportButton">Cancel</button>
+          </div>
+          <p class="form-note">This workflow is designed for authorized feeds and approved listing URLs only. It does not bypass Zillow or MLS restrictions.</p>
+        </form>
+
+        <div class="admin-layout">
+          <form class="listing-form" id="listingForm">
+            <div class="admin-form-heading">
+              <h3 id="listingFormTitle">Add a property</h3>
+              <span id="activeListingCount">0 active listings</span>
+            </div>
+            <label>
+              Property title
+              <input id="listingTitle" type="text" placeholder="Willow Glen bungalow" required />
+            </label>
+            <div class="form-row">
+              <label>
+                City
+                <input id="listingCity" type="text" placeholder="San Jose" required />
+              </label>
+              <label>
+                Price
+                <input id="listingPrice" type="number" min="0" step="50" placeholder="3950" required />
+              </label>
+            </div>
+            <div class="form-row">
+              <label>
+                Street address
+                <input id="listingAddress" type="text" placeholder="2258 Cherry Ave" />
+              </label>
+              <label>
+                ZIP code
+                <input id="listingZip" type="text" placeholder="95125" />
+              </label>
+            </div>
+            <div class="form-row">
+              <label>
+                Source price
+                <input id="listingSourcePrice" type="number" min="0" step="50" placeholder="2500" />
+              </label>
+              <label>
+                Display price
+                <input id="listingDisplayPrice" type="number" min="0" step="50" placeholder="2350" />
+              </label>
+            </div>
+            <div class="toggle-row">
+              <span>Override approved website price</span>
+              <input id="listingPriceOverride" type="checkbox" />
+            </div>
+            <label>
+              Property type
+              <select id="listingPropertyType">
+                <option>House</option>
+                <option>Apartment</option>
+                <option>Condo</option>
+                <option>Townhome</option>
+                <option>Studio</option>
+              </select>
+            </label>
+            <label>
+              State
+              <select id="listingState">
+                <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option><option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option><option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option><option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option><option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option><option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option><option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option><option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option><option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option><option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option>
+              </select>
+            </label>
+            <div class="form-row">
+              <label>
+                Status
+                <select id="listingStatus">
+                  <option>For Rent</option>
+                  <option>Available</option>
+                  <option>Pending</option>
+                  <option>Rented</option>
+                  <option>Sold</option>
+                  <option>Draft</option>
+                </select>
+              </label>
+              <label>
+                Publishing mode
+                <select id="listingMode">
+                  <option value="published">Published</option>
+                  <option value="draft">Draft</option>
+                  <option value="pending">Pending review</option>
+                </select>
+              </label>
+            </div>
+            <label>
+              Listing URL / source
+              <input id="listingSourceUrl" type="url" placeholder="https://example.com/listing" />
+            </label>
+            <label>
+              Details
+              <input id="listingDetails" type="text" placeholder="4 bed • 3 bath • 2,400 sq ft" required />
+            </label>
+            <label>
+              Text number
+              <input id="listingTextNumber" type="tel" placeholder="+1 (415) 555-0123" />
+            </label>
+            <label>
+              Amenities
+              <textarea id="listingAmenities" rows="3" placeholder="Parking, pool, washer/dryer, gym, pet friendly"></textarea>
+            </label>
+            <label>
+              Gallery images
+              <input id="listingImages" type="file" accept="image/*,.heic,.heif,.avif,.tif,.tiff,.svg" multiple />
+              <textarea id="listingGallery" rows="3" placeholder="Or paste one image filename or URL per line"></textarea>
+            </label>
+            <div class="listing-form-actions">
+              <button class="admin-submit" id="listingSubmit" type="submit">Add listing</button>
+              <button class="cancel-edit" id="cancelEdit" type="button" hidden>Cancel edit</button>
+            </div>
+            <p class="form-note">Choose photos directly from your device, or paste image filenames or URLs. Up to 35 images appear on each card.</p>
+          </form>
+
+          <div class="admin-list" id="adminList"></div>
+        </div>
+
+        <form class="video-form" id="videoForm">
+          <div class="admin-form-heading">
+            <h3>Add TikTok videos</h3>
+            <span>Private</span>
+          </div>
+          <label>
+            TikTok post or profile links
+            <textarea id="tiktokLinks" rows="4" placeholder="Paste one TikTok link per line" required></textarea>
+          </label>
+          <button class="admin-submit" type="submit">Add video links</button>
+          <p class="form-note">Visitors can open each tour on TikTok. Add one link per line.</p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="main-footer">
+      <div><strong>Cooper Fox Realty</strong><p>Local guidance for renting, selling, and managing property.</p><span class="founded-year">Founded 2015</span></div>
+      <div class="main-footer-links"><a href="#listings">Available homes</a><a href="rental-manager.html">Rental management</a><a href="post-property.html">Post a property</a></div>
+      <div><span>Contact</span><a href="tel:+13463163488">346-316-3488</a><a href="mailto:Coopermathewfoxhomes@realtyagent.com">Email Cooper Fox</a></div>
+      <small>&#169; 2026 Cooper Fox Realty</small>
+    </footer>
+
+    <div class="chat-modal" id="chatModal" aria-hidden="true">
+      <div class="chat-panel">
+        <div class="chat-header">
+          <div class="chat-identity">
+            <div class="chat-avatar">CF</div>
+            <div>
+              <p class="chat-kicker">Property inquiry</p>
+              <h3 id="chatTitle">Listing</h3>
+            </div>
+          </div>
+          <div class="chat-status-wrap">
+            <span class="chat-status-dot"></span>
+            <span class="chat-status-text">Online</span>
+            <button class="close-chat" type="button" aria-label="Close chat">×</button>
+          </div>
+        </div>
+
+        <div class="chat-body" id="chatMessages">
+          <div class="message bot">
+            Hello! I’m the Cooper Fox Realty assistant. Ask about this home and I’ll help.
+          </div>
+        </div>
+
+        <div class="typing-indicator" id="typingIndicator" aria-live="polite" hidden>
+          <span></span><span></span><span></span>
+          <small>typing...</small>
+        </div>
+
+        <form class="chat-form" id="chatForm">
+          <input
+            id="chatInput"
+            type="text"
+            placeholder="Ask about this home..."
+            autocomplete="off"
+          />
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="inbox-modal" id="inboxModal" aria-hidden="true">
+      <div class="inbox-panel">
+        <div class="chat-header">
+          <div>
+            <p class="chat-kicker">Private inbox</p>
+            <h3>Listing messages</h3>
+          </div>
+          <button class="close-chat" type="button" data-close-inbox aria-label="Close inbox">×</button>
+        </div>
+
+        <div class="inbox-layout">
+          <aside class="inbox-list" id="inboxList"></aside>
+          <section class="inbox-thread">
+            <div class="inbox-thread-header" id="inboxThreadHeader">Select a conversation</div>
+            <div class="chat-body inbox-body" id="inboxBody"></div>
+            <form class="chat-form inbox-form" id="inboxForm">
+              <input id="inboxInput" type="text" placeholder="Reply to the sender..." autocomplete="off" />
+              <button type="submit">Reply</button>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <div class="photo-modal" id="photoModal" aria-hidden="true">
+      <div class="photo-panel">
+        <button class="photo-close" type="button" aria-label="Close photo viewer">×</button>
+        <button class="photo-arrow previous" type="button" aria-label="Previous photo">‹</button>
+        <img id="photoViewer" src="" alt="Property photo" />
+        <button class="photo-arrow next" type="button" aria-label="Next photo">›</button>
+        <p id="photoCaption"></p>
+      </div>
+    </div>
+
+    <script>
+      const socketServerUrl = (() => {
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+          return 'http://localhost:3000';
+        }
+        return window.location.origin;
+      })();
+
+      const socketScript = document.createElement('script');
+      socketScript.src = `${socketServerUrl}/socket.io/socket.io.js`;
+      socketScript.async = true;
+      socketScript.defer = true;
+      document.head.appendChild(socketScript);
+
+      const agentOnline = true;
+      const socket = (() => {
+        if (typeof window !== 'undefined' && window.io && typeof io === 'function') {
+          return io(socketServerUrl, { transports: ['websocket', 'polling'] });
+        }
+
+        return {
+          emit: function () {},
+          on: function () {},
+          off: function () {},
+          disconnect: function () {},
+          join: function () {},
+          leave: function () {}
+        };
+      })();
+      let activeRoomKey = '';
+
+      function escapeHtml(value) {
+        return String(value ?? '').replace(/[&<>"']/g, (character) => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        }[character]));
+      }
+
+      function formatPhone(value) {
+        const digits = String(value || '').replace(/\D/g, '');
+        if (!digits) return '';
+        if (digits.length === 11 && digits.startsWith('1')) {
+          return `(${digits.slice(1, 4)}) ${digits.slice(4, 7)}-${digits.slice(7)}`;
+        }
+        if (digits.length === 10) {
+          return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+        }
+        return digits;
+      }
+
+      function getListingPhone(listing) {
+        const value = [listing?.contactPhone, listing?.phone, listing?.textingNumber, listing?.posterContact]
+          .find((candidate) => /^\+?\d[\d\s().-]{7,}\d$/.test(String(candidate || '').trim())) || '+1 (346) 316-3488';
+        const raw = String(value || '').trim();
+        if (!raw) return '';
+        if (/^\+?\d[\d\s().-]{7,}\d$/.test(raw)) {
+          const digits = raw.replace(/\D/g, '');
+          if (digits.length === 10) return `+1${digits}`;
+          if (digits.length > 10) return `+${digits}`;
+        }
+        return raw;
+      }
+
+      function getListingShareKey(listing) {
+        return `${listing?.title || 'property'}-${listing?.city || 'city'}`.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      }
+
+      function applyListingMetaTags(listing) {
+        const titleText = listing?.title || 'Cooper Fox Realty';
+        const cityText = listing?.city || 'California';
+        const priceText = listing?.price || 'Available rental';
+        const descriptionText = listing
+          ? `${titleText} in ${cityText} for ${priceText}. Explore the property details, amenities, and schedule a viewing with Cooper Fox Realty.`
+          : 'Find available rental homes, property tours, and local guidance from Cooper Fox Realty.';
+        const imagePath = (() => {
+          const gallery = Array.isArray(listing?.gallery) ? listing.gallery.filter(Boolean) : [];
+          return gallery[0] || 'cooper%20fox%20icon.png';
+        })();
+        const absoluteImageUrl = new URL(imagePath, window.location.origin).toString();
+        const currentUrl = new URL(window.location.href);
+        currentUrl.hash = '';
+        currentUrl.searchParams.set('listing', listing ? getListingShareKey(listing) : '');
+        if (!listing) {
+          currentUrl.searchParams.delete('listing');
+        }
+
+        const setMetaTag = (selector, attributeName, attributeValue, content) => {
+          let metaTag = document.querySelector(selector);
+          if (!metaTag) {
+            metaTag = document.createElement('meta');
+            if (selector.startsWith('meta[property=')) {
+              metaTag.setAttribute('property', attributeValue);
+            } else {
+              metaTag.setAttribute(attributeName, attributeValue);
+            }
+            document.head.appendChild(metaTag);
+          }
+          metaTag.setAttribute(attributeName, attributeValue);
+          metaTag.content = content;
+        };
+
+        document.title = listing ? `${titleText} | ${cityText} | Cooper Fox Realty` : 'Cooper Fox Realty';
+        setMetaTag('meta[name="description"]', 'name', 'description', descriptionText);
+        setMetaTag('meta[property="og:title"]', 'property', 'og:title', listing ? `${titleText} | ${cityText}` : 'Cooper Fox Realty | Rental Listings');
+        setMetaTag('meta[property="og:description"]', 'property', 'og:description', descriptionText);
+        setMetaTag('meta[property="og:url"]', 'property', 'og:url', currentUrl.toString());
+        setMetaTag('meta[property="og:image"]', 'property', 'og:image', absoluteImageUrl);
+        setMetaTag('meta[property="og:image:alt"]', 'property', 'og:image:alt', listing ? `${titleText} in ${cityText}` : 'Cooper Fox Realty logo');
+        setMetaTag('meta[name="twitter:title"]', 'name', 'twitter:title', listing ? `${titleText} | ${cityText}` : 'Cooper Fox Realty | Rental Listings');
+        setMetaTag('meta[name="twitter:description"]', 'name', 'twitter:description', descriptionText);
+        setMetaTag('meta[name="twitter:image"]', 'name', 'twitter:image', absoluteImageUrl);
+      }
+
+      function normalizeListingGallery(listing) {
+        if (!listing || !Array.isArray(listing.gallery)) return [];
+        const gallery = listing.gallery
+          .map((image) => typeof image === 'string' ? image.trim() : '')
+          .filter((image) => image !== '');
+        return [...new Set(gallery)];
+      }
+
+      const defaultListings = [
+        {
+          title: 'San Jose',
+          price: '$3,950/mo',
+          priceValue: 3950,
+          propertyType: 'Apartment',
+          status: 'For Rent',
+          details: '3 bed • 2 bath • 1,850 sq ft',
+          city: 'San Jose',
+          state: 'California',
+          address: '789 Park Avenue',
+          zipCode: '95123',
+          contactPhone: '+1 (346) 316-3488',
+          postedBy: 'Cooper Fox Realty',
+          gallery: ['cupertino1.webp', 'cupertino2.webp', 'cupertino3.webp', 'cupertino4.webp', 'cupertino5.webp', 'cupertino6.webp', 'cupertino7.webp', 'cupertino8.webp', 'cupertino9.webp', 'cupertino11.webp']
+        },
+        {
+          title: 'Cupertino',
+          price: '$4,800/mo',
+          priceValue: 4800,
+          propertyType: 'Condo',
+          status: 'New',
+          details: '4 bed • 3 bath • 2,640 sq ft',
+          city: 'Cupertino',
+          state: 'California',
+          address: '1025 Meadow Lane',
+          zipCode: '95014',
+          contactPhone: '+1 (346) 316-3488',
+          postedBy: 'Cooper Fox Realty',
+          gallery: ['grove1.webp', 'grove2.webp', 'grove3.webp', 'grove4.webp', 'grove5.webp', 'grove6.webp', 'grove7.webp', 'grove8.webp', 'grove9.webp', 'grove10.webp']
+        },
+        {
+          title: 'Los Gatos',
+          price: '$6,250/mo',
+          priceValue: 6250,
+          propertyType: 'House',
+          status: 'Open House',
+          details: '5 bed • 4 bath • 3,420 sq ft',
+          city: 'Los Gatos',
+          state: 'California',
+          address: '220 Sierra Road',
+          zipCode: '95032',
+          contactPhone: '+1 (346) 316-3488',
+          postedBy: 'Cooper Fox Realty',
+          gallery: ['grove11.webp', 'grove12.webp', 'grove13.webp', 'grove14.webp', 'grove15.webp', 'grove16.webp', 'cupertino10.webp', 'cupertino1.webp', 'cupertino2.webp', 'cupertino3.webp']
+        },
+        {
+          title: 'Cherry Avenue',
+          price: '$2,000/mo',
+          priceValue: 2000,
+          propertyType: 'House',
+          status: 'For Rent',
+          details: '2 bed • 2 bath • San Jose rental home',
+          city: 'San Jose',
+          state: 'California',
+          address: '2258 Cherry Avenue',
+          zipCode: '95122',
+          contactPhone: '+1 (346) 316-3488',
+          postedBy: 'Cooper Fox Realty',
+          gallery: [
+            '2258 Cherry Ave, San Jose, CA 1.webp',
+            '2258 Cherry Ave, San Jose, CA 2.webp',
+            '2258 Cherry Ave, San Jose, CA 3.webp'
+          ]
+        }
+      ];
+
+      async function fetchSharedListings() {
+        try {
+          const response = await fetch('./listings-sync.php', { cache: 'no-store' });
+          if (response.ok) {
+            const parsed = await response.json();
+            return Array.isArray(parsed) ? parsed : null;
+          }
+        } catch {
+          // Fall through to the Cloudflare Pages route when the PHP sync endpoint is unavailable.
+        }
+
+        try {
+          const response = await fetch('/api/listings', { cache: 'no-store' });
+          if (response.ok) {
+            const parsed = await response.json();
+            return Array.isArray(parsed.listings) ? parsed.listings : Array.isArray(parsed) ? parsed : null;
+          }
+        } catch {
+          return null;
+        }
+
+        return null;
+      }
+
+      function saveSharedListings(listings) {
+        try {
+          window.localStorage.setItem('copperFoxRentalListings', JSON.stringify(listings));
+        } catch {
+          // Ignore local storage write failures.
+        }
+
+        const payload = JSON.stringify(listings);
+        fetch('./listings-sync.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: payload
+        }).then((response) => {
+          if (!response.ok) throw new Error(`PHP listing storage failed with HTTP ${response.status}`);
+          return response.json();
+        }).then((result) => {
+          if (!result || result.ok !== true) throw new Error('PHP listing storage did not acknowledge the save');
+        }).catch(() => {
+          return fetch('/api/listings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: payload
+          }).then((response) => response.json().then((result) => {
+            if (!response.ok || !result || result.success !== true) {
+              throw new Error((result && result.message) || `Cloudflare listing storage failed with HTTP ${response.status}`);
+            }
+          }));
+        }).catch((error) => console.error('Shared listing save failed:', error));
+      }
+
+      async function getStoredListings() {
+        const sharedListings = await fetchSharedListings();
+        if (Array.isArray(sharedListings) && sharedListings.length) {
+          try {
+            window.localStorage.setItem('copperFoxRentalListings', JSON.stringify(sharedListings));
+          } catch {
+            // Keep the shared response in memory when local storage is unavailable.
+          }
+          return sharedListings;
+        }
+
+        try {
+          const stored = window.localStorage.getItem('copperFoxRentalListings');
+          const parsed = stored ? JSON.parse(stored) : null;
+          if (Array.isArray(parsed) && parsed.length) {
+            return parsed;
+          }
+        } catch (error) {
+          window.localStorage.removeItem('copperFoxRentalListings');
+        }
+
+        return [...defaultListings];
+      }
+
+      window.__cooperFoxListings = [...defaultListings];
+      let listings = window.__cooperFoxListings;
+
+      async function initializeListings() {
+        const storedListings = await getStoredListings();
+        listings = Array.isArray(storedListings) && storedListings.length ? storedListings : [...defaultListings];
+
+        const cherryListing = defaultListings.find((listing) => listing.title === 'Cherry Avenue');
+        const cherryListingIndexes = listings
+          .map((listing, index) => ({ listing, index }))
+          .filter(({ listing }) => listing.title === '2258 Cherry Avenue' || listing.title === 'Cherry Avenue')
+          .map(({ index }) => index);
+
+        if (cherryListingIndexes.length) {
+          const savedCherryListing = listings[cherryListingIndexes[0]];
+          savedCherryListing.title = cherryListing.title;
+          savedCherryListing.price = cherryListing.price;
+          savedCherryListing.priceValue = cherryListing.priceValue;
+          savedCherryListing.details = cherryListing.details;
+          savedCherryListing.propertyType = cherryListing.propertyType;
+          savedCherryListing.gallery = cherryListing.gallery;
+          listings = listings.filter((listing, index) => !cherryListingIndexes.slice(1).includes(index));
+          saveListings();
+        } else if (!listings.some((listing) => listing.title === cherryListing.title)) {
+          listings.push(cherryListing);
+          saveListings();
+        }
+
+        if (!Array.isArray(listings) || !listings.length) {
+          listings = [...defaultListings];
+          saveListings();
+        }
+
+        if (typeof renderListings === 'function') renderListings();
+        if (typeof renderTikTokVideos === 'function') renderTikTokVideos();
+
+        const initialListingKey = new URLSearchParams(window.location.search).get('listing');
+        if (initialListingKey) {
+          const matchedListing = listings.find((listing) => getListingShareKey(listing) === initialListingKey);
+          if (matchedListing) {
+            applyListingMetaTags(matchedListing);
+          }
+        } else {
+          applyListingMetaTags(null);
+        }
+      }
+
+      function startSharedListingSync() {
+        let lastSyncedSignature = '';
+
+        const syncNow = async () => {
+          try {
+            const sharedListings = await fetchSharedListings();
+            if (!Array.isArray(sharedListings) || !sharedListings.length) return;
+            const signature = JSON.stringify(sharedListings);
+            if (signature === lastSyncedSignature) return;
+            lastSyncedSignature = signature;
+            listings = sharedListings;
+            saveSharedListings(sharedListings);
+            if (typeof renderListings === 'function') renderListings();
+          } catch {
+            // Ignore sync errors and keep the page usable.
+          }
+        };
+
+        syncNow();
+        window.setInterval(syncNow, 4000);
+      }
+
+      const container = document.getElementById('listingsContainer');
+      const cityFilter = document.getElementById('cityFilter');
+      const stateFilter = document.getElementById('stateFilter');
+      const propertyTypeFilter = document.getElementById('propertyTypeFilter');
+      const priceFilter = document.getElementById('priceFilter');
+      const minPriceFilter = document.getElementById('minPriceFilter');
+      const maxPriceFilter = document.getElementById('maxPriceFilter');
+      const sortFilter = document.getElementById('sortFilter');
+      const resultsCount = document.getElementById('resultsCount');
+      const resetFilters = document.getElementById('resetFilters');
+      const locationSearch = document.getElementById('locationSearch');
+      const searchButton = document.getElementById('searchButton');
+      const chatModal = document.getElementById('chatModal');
+      const chatTitle = document.getElementById('chatTitle');
+      const chatMessages = document.getElementById('chatMessages');
+      const chatForm = document.getElementById('chatForm');
+      const chatInput = document.getElementById('chatInput');
+      const closeChatBtn = document.querySelector('.close-chat');
+      const inboxQuickButton = document.getElementById('inboxQuickButton');
+      const inboxModal = document.getElementById('inboxModal');
+      const inboxList = document.getElementById('inboxList');
+      const inboxBody = document.getElementById('inboxBody');
+      const inboxThreadHeader = document.getElementById('inboxThreadHeader');
+      const inboxForm = document.getElementById('inboxForm');
+      const inboxInput = document.getElementById('inboxInput');
+      const photoModal = document.getElementById('photoModal');
+      const photoViewer = document.getElementById('photoViewer');
+      const photoCaption = document.getElementById('photoCaption');
+      const closePhotoBtn = document.querySelector('.photo-close');
+      const previousPhotoBtn = document.querySelector('.photo-arrow.previous');
+      const nextPhotoBtn = document.querySelector('.photo-arrow.next');
+      const listingForm = document.getElementById('listingForm');
+      const listingPropertyType = document.getElementById('listingPropertyType');
+      const listingImages = document.getElementById('listingImages');
+      const adminList = document.getElementById('adminList');
+      const activeListingCount = document.getElementById('activeListingCount');
+      const totalListingsStat = document.getElementById('totalListingsStat');
+      const activeListingsStat = document.getElementById('activeListingsStat');
+      const draftListingsStat = document.getElementById('draftListingsStat');
+      const pendingListingsStat = document.getElementById('pendingListingsStat');
+      const closedListingsStat = document.getElementById('closedListingsStat');
+      const viewsListingsStat = document.getElementById('viewsListingsStat');
+      const importListingForm = document.getElementById('importListingForm');
+      const importListingUrl = document.getElementById('importListingUrl');
+      const importProvider = document.getElementById('importProvider');
+      const importListingId = document.getElementById('importListingId');
+      const cancelImportButton = document.getElementById('cancelImportButton');
+      const tiktokVideos = document.getElementById('tiktokVideos');
+      const videoForm = document.getElementById('videoForm');
+      const listingFormTitle = document.getElementById('listingFormTitle');
+      const listingSubmit = document.getElementById('listingSubmit');
+      const cancelEdit = document.getElementById('cancelEdit');
+      let editingListingIndex = -1;
+      let activeListing = null;
+      let visibleListingCount = 24;
+      
+      // Pagination variables
+      const paginationControls = document.getElementById('paginationControls');
+      const prevPageBtn = document.getElementById('prevPageBtn');
+      const nextPageBtn = document.getElementById('nextPageBtn');
+      const pageInfo = document.getElementById('pageInfo');
+      const ITEMS_PER_PAGE = 10;
+      let currentPage = 1;
+
+      const defaultTikTokVideos = [
+        { title: 'California property tours', state: 'California', url: 'https://www.tiktok.com/@coopermathewfox' },
+        { title: 'North Carolina property tour', state: 'North Carolina', url: 'https://lite.tiktok.com/t/ZT9kw4T2w5BsR-4ipFy/' },
+        { title: 'California rental tour 1', state: 'California', url: 'https://www.tiktok.com/@coopermathewfox/video/7665201789595028749' },
+        { title: 'California rental tour 2', state: 'California', url: 'https://www.tiktok.com/@coopermathewfox/video/7665014631768870157' },
+        { title: 'California rental tour 3', state: 'California', url: 'https://www.tiktok.com/@coopermathewfox/video/7663711502355942670' }
+      ];
+      const savedTikTokVideos = window.localStorage.getItem('copperFoxTikTokVideos');
+      let storedTikTokVideos = [];
+      try {
+        const parsedTikTokVideos = savedTikTokVideos ? JSON.parse(savedTikTokVideos) : [];
+        if (Array.isArray(parsedTikTokVideos)) storedTikTokVideos = parsedTikTokVideos;
+      } catch (error) {
+        window.localStorage.removeItem('copperFoxTikTokVideos');
+      }
+      let tikTokVideoLinks = [...storedTikTokVideos];
+
+      defaultTikTokVideos.forEach((video) => {
+        if (!tikTokVideoLinks.some((storedVideo) => storedVideo.url === video.url)) {
+          tikTokVideoLinks.push(video);
+        }
+      });
+
+      window.localStorage.setItem('copperFoxTikTokVideos', JSON.stringify(tikTokVideoLinks));
+
+      function renderTikTokVideos() {
+        if (!tiktokVideos) return;
+
+        tiktokVideos.innerHTML = tikTokVideoLinks.map((video) => {
+          const videoId = getTikTokVideoId(video.url);
+
+          if (videoId) {
+            return `
+              <article class="video-embed-card">
+                <iframe src="https://www.tiktok.com/player/v1/${videoId}?description=1&music_info=1" title="${video.title}" loading="lazy" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
+                <div class="video-embed-info">
+                  <span class="video-state">${video.state}</span>
+                  <strong>${video.title}</strong>
+                  <a class="video-link" href="${video.url}" target="_blank" rel="noopener noreferrer">Open on TikTok ↗</a>
+                </div>
+              </article>
+            `;
+          }
+
+          return `
+            <a class="video-tour-card" href="${video.url}" target="_blank" rel="noopener noreferrer">
+              <span class="video-play">▶</span>
+              <span class="video-state">${video.state}</span>
+              <strong>${video.title}</strong>
+              <span class="video-link">Open on TikTok ↗</span>
+            </a>
+          `;
+        }).join('');
+      }
+
+      function getTikTokVideoId(url) {
+        const match = url.match(/\/video\/(\d+)/);
+        return match ? match[1] : null;
+      }
+      let activeGallery = [];
+      let activePhotoIndex = 0;
+
+      async function saveListings() {
+        listings = listings.map((listing) => ({
+          ...listing,
+          gallery: normalizeListingGallery(listing)
+        }));
+
+        try {
+          window.localStorage.setItem('copperFoxRentalListings', JSON.stringify(listings));
+        } catch {
+          // Ignore local storage write failures.
+        }
+
+        const payload = JSON.stringify(listings);
+        const response = await fetch('./listings-sync.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: payload
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const result = await response.json().catch(() => null);
+        if (!result || result.ok !== true) {
+          throw new Error('listing sync did not acknowledge ok');
+        }
+
+        return true;
+      }
+
+      function formatPrice(value) {
+        return `$${Number(value).toLocaleString('en-US')}/mo`;
+      }
+
+      function getListingDisplayPriceValue(listing) {
+        const fallbackValue = Number(listing?.priceValue ?? listing?.displayPrice ?? listing?.sourcePrice ?? 0);
+        if (listing?.priceOverride && Number(listing?.displayPrice ?? listing?.priceValue ?? 0) > 0) {
+          return Number(listing.displayPrice);
+        }
+        if (Number.isFinite(fallbackValue) && fallbackValue > 0) {
+          return fallbackValue;
+        }
+        return 0;
+      }
+
+      function getListingPriceLabel(listing) {
+        const value = getListingDisplayPriceValue(listing);
+        return value ? formatPrice(value) : (listing?.price || '$0/mo');
+      }
+
+      function getAdminDashboardStats() {
+        const total = listings.length;
+        const active = listings.filter((listing) => listing.status !== 'Sold' && listing.status !== 'Rented' && listing.status !== 'Draft').length;
+        const draft = listings.filter((listing) => String(listing.status).toLowerCase() === 'draft' || listing.isDraft).length;
+        const pending = listings.filter((listing) => String(listing.status).toLowerCase() === 'pending').length;
+        const closed = listings.filter((listing) => ['Sold', 'Rented'].includes(listing.status)).length;
+        return { total, active, draft, pending, closed, views: total * 18 + 124 };
+      }
+
+      function renderAdminDashboard() {
+        const stats = getAdminDashboardStats();
+        if (totalListingsStat) totalListingsStat.textContent = String(stats.total);
+        if (activeListingsStat) activeListingsStat.textContent = String(stats.active);
+        if (draftListingsStat) draftListingsStat.textContent = String(stats.draft);
+        if (pendingListingsStat) pendingListingsStat.textContent = String(stats.pending);
+        if (closedListingsStat) closedListingsStat.textContent = String(stats.closed);
+        if (viewsListingsStat) viewsListingsStat.textContent = String(stats.views);
+      }
+
+      function normalizeSearchTerm(value) {
+        return (value || '').trim();
+      }
+
+      function applySearchLocation(searchValue) {
+        currentPage = 1;
+        const query = normalizeSearchTerm(searchValue);
+        if (!query) {
+          if (cityFilter) cityFilter.value = '';
+          renderListings();
+          return;
+        }
+
+        const normalized = query.replace(/,\s*california$/i, '').trim();
+        if (cityFilter) cityFilter.value = normalized;
+        if (locationSearch) locationSearch.value = query;
+        renderListings();
+      }
+
+      function addAdditionalReviews() {
+        const reviewsGrid = document.querySelector('.reviews-grid');
+        if (!reviewsGrid) return;
+
+        const reviewCards = reviewsGrid.querySelectorAll('.review-card');
+        reviewCards.forEach((card, index) => {
+          if (index >= 5) card.classList.add('review-is-hidden');
+        });
+      }
+
+      function addReviewHousePhotos() {
+        // Review property photos are rendered explicitly in the markup.
+      }
+
+      function applyReviewRatings() {
+        document.querySelectorAll('.review-stars').forEach((stars) => {
+          const rating = Math.min(5, Math.max(3, Number.parseInt(stars.dataset.rating || stars.getAttribute('aria-label') || '5', 10) || 5));
+          const filled = '★'.repeat(rating);
+          const empty = '☆'.repeat(5 - rating);
+          stars.textContent = `${filled}${empty}`;
+          stars.setAttribute('aria-label', `${rating} out of 5 stars`);
+        });
+      }
+
+      function renderAdminList() {
+        if (!adminList) return;
+
+        const activeCount = listings.filter((listing) => listing.status !== 'Sold' && listing.status !== 'Rented' && listing.status !== 'Draft').length;
+        if (activeListingCount) {
+          activeListingCount.textContent = `${activeCount} active listing${activeCount === 1 ? '' : 's'}`;
+        }
+
+        adminList.innerHTML = listings.map((listing, index) => `
+          <article class="admin-item ${listing.status === 'Sold' || listing.status === 'Rented' ? 'is-sold' : ''}">
+            <div>
+              <strong>${escapeHtml(listing.title || 'Untitled property')}</strong>
+              <span>${escapeHtml(listing.propertyType || 'House')} · ${escapeHtml(listing.city || 'California')}, ${escapeHtml(listing.state || 'California')} · ${escapeHtml(getListingPriceLabel(listing))} · ${escapeHtml(listing.status || 'For Rent')}</span>
+            </div>
+            <div class="admin-item-actions">
+              <button type="button" data-action="edit" data-index="${index}">Edit</button>
+              <button type="button" data-action="status" data-index="${index}">${listing.status === 'Sold' || listing.status === 'Rented' ? 'Mark active' : 'Mark sold'}</button>
+              <button type="button" data-action="delete" data-index="${index}">Delete</button>
+            </div>
+          </article>
+        `).join('');
+
+        renderAdminDashboard();
+      }
+
+      function getFilteredListings() {
+        const cityValue = cityFilter ? cityFilter.value.trim().toLowerCase() : '';
+        const stateValue = stateFilter ? stateFilter.value : 'all';
+        const priceValue = priceFilter ? priceFilter.value : 'all';
+        const minPrice = minPriceFilter ? Number(minPriceFilter.value) || 0 : 0;
+        const maxPrice = maxPriceFilter ? Number(maxPriceFilter.value) || Infinity : Infinity;
+        const quickSearch = normalizeSearchTerm(locationSearch.value).toLowerCase();
+
+        return listings.filter((listing) => {
+          const listingCity = (listing.city || '').toLowerCase();
+          const listingState = (listing.state || 'California').toLowerCase();
+          const listingType = listing.propertyType || 'House';
+          const listingLabel = `${listingCity}, ${listingState}`.toLowerCase();
+
+          const matchesCity = !cityValue || listingCity === cityValue || listingLabel.includes(cityValue);
+          const matchesState = stateValue === 'all' || listingState === stateValue.toLowerCase();
+          const matchesPropertyType = propertyTypeFilter.value === 'all' || listingType === propertyTypeFilter.value;
+          const matchesQuickSearch = !quickSearch || listingLabel.includes(quickSearch) || listingCity.includes(quickSearch) || listingState.includes(quickSearch);
+
+          let matchesPrice = true;
+          const range = {
+            '300-650': [300, 650],
+            '700-1000': [700, 1000],
+            '800-1200': [800, 1200],
+            '1200-1500': [1200, 1500],
+            '1500-2000': [1500, 2000],
+            '1800-2500': [1800, 2500],
+            '2500-3000': [2500, 3000],
+            '3000-4000': [3000, 4000],
+            '4000-6000': [4000, 6000],
+            '6000-7500': [6000, 7500]
+          }[priceValue];
+
+          if (range) {
+            matchesPrice = listing.priceValue >= range[0] && listing.priceValue <= range[1];
+          }
+
+          return matchesCity && matchesState && matchesPropertyType && matchesQuickSearch && matchesPrice
+            && listing.priceValue >= minPrice && listing.priceValue <= maxPrice;
+        });
+      }
+
+      function getListingFeatureTags(listing) {
+        const staticTags = Array.isArray(listing?.amenities) ? listing.amenities.slice(0, 4) : [];
+        const defaultTags = ['Parking', 'Air conditioning', 'Washer / Dryer', 'Pet friendly'];
+        const detailsText = String(listing?.details || '');
+        const tags = staticTags.length ? staticTags : defaultTags;
+        if (detailsText.includes('bed')) tags[0] = tags[0] || 'Bedrooms';
+        return tags.slice(0, 4).map((tag) => tag.trim()).filter(Boolean);
+      }
+
+      function renderListings() {
+        if (!container) return;
+
+        const filteredListings = getFilteredListings().filter((listing) => listing.status !== 'Sold' && listing.status !== 'Draft' && !listing.isDraft);
+        const sortValue = sortFilter ? sortFilter.value : 'featured';
+
+        filteredListings.sort((firstListing, secondListing) => {
+          if (sortValue === 'price-low') return firstListing.priceValue - secondListing.priceValue;
+          if (sortValue === 'price-high') return secondListing.priceValue - firstListing.priceValue;
+          if (sortValue === 'city') return firstListing.city.localeCompare(secondListing.city);
+          return listings.indexOf(firstListing) - listings.indexOf(secondListing);
+        });
+
+        if (resultsCount) {
+          resultsCount.textContent = `${filteredListings.length} home${filteredListings.length === 1 ? '' : 's'} available`;
+        }
+
+        if (!filteredListings.length) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <h3>No listings match these filters.</h3>
+              <p>Try resetting the filters or add a new listing later.</p>
+            </div>
+          `;
+          // Hide pagination controls when no results
+          if (paginationControls) {
+            paginationControls.style.display = 'none';
+          }
+          return;
+        }
+
+        // Calculate pagination
+        const totalPages = Math.ceil(filteredListings.length / ITEMS_PER_PAGE);
+        currentPage = Math.max(1, Math.min(currentPage, totalPages));
+        const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+        const endIndex = startIndex + ITEMS_PER_PAGE;
+        const visibleListings = filteredListings.slice(startIndex, endIndex);
+
+        // Update pagination info
+        if (pageInfo) {
+          pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+        }
+        
+        // Show/hide pagination controls
+        if (paginationControls) {
+          paginationControls.style.display = totalPages > 1 ? 'flex' : 'none';
+        }
+        
+        // Update button states
+        if (prevPageBtn) {
+          prevPageBtn.disabled = currentPage === 1;
+        }
+        if (nextPageBtn) {
+          nextPageBtn.disabled = currentPage === totalPages;
+        }
+
+        const propertyCardsHtml = visibleListings.map((listing) => {
+          const gallery = normalizeListingGallery(listing).slice(0, 35);
+          const count = gallery.length;
+          const safeTitle = escapeHtml(listing.title || '');
+          const safeCity = escapeHtml(listing.city || '');
+          const safePrice = escapeHtml(String(listing.price || ''));
+          const safeType = escapeHtml(String(listing.propertyType || 'House'));
+          const safeDetails = escapeHtml(String(listing.details || ''));
+          const safeState = escapeHtml(String(listing.state || 'California'));
+          const listingPhone = getListingPhone(listing);
+          const formattedPhone = formatPhone(listingPhone);
+          const listingAddress = escapeHtml((listing.address || listing.streetAddress || listing.location || '').trim() || 'Address available upon request');
+          const zipCode = escapeHtml((listing.zipCode || listing.zip || '').trim());
+          const listingDescription = escapeHtml((listing.description || listing.details || '').trim());
+          const listingUtilities = escapeHtml((listing.utilities || listing.amenities || '').trim());
+          const phoneLink = '<a class="listing-phone-pill" href="tel:' + encodeURIComponent(listingPhone).replace(/%2B/g, '+') + '">Text • ' + escapeHtml(formattedPhone) + '</a>';
+          const listingAmenities = Array.isArray(listing.amenities)
+            ? listing.amenities
+            : typeof listing.amenities === 'string'
+              ? listing.amenities.split(/[,;\n]+/).map((item) => item.trim()).filter(Boolean)
+              : [];
+          const listingSource = escapeHtml((listing.sourceUrl || listing.listingUrl || '').trim());
+          const listingPoster = escapeHtml((listing.postedBy || listing.posterName || '').trim());
+          const listingStatus = escapeHtml((listing.status || 'For Rent').trim());
+          const listingMode = escapeHtml((listing.mode || listing.publishingMode || 'published').trim());
+          const listingTextNumber = escapeHtml((listing.textNumber || listing.contactPhone || listing.textingNumber || '').trim());
+          const listingAmenitiesChips = listingAmenities.slice(0, 4).map((amenity) => '<span class="listing-chip">' + escapeHtml(amenity) + '</span>').join('');
+          const shareUrl = new URL(window.location.href);
+          shareUrl.search = '';
+          shareUrl.hash = '';
+          shareUrl.searchParams.set('listing', getListingShareKey(listing));
+          const shareButton = '<button class="share-listing-btn" type="button" data-share-url="' + shareUrl.toString() + '">Copy link</button>';
+          const featuredTags = getListingFeatureTags(listing).map((tag) => '<span class="listing-chip">' + escapeHtml(tag) + '</span>').join('');
+          const tourAction = '<button class="schedule-tour-btn" type="button" data-property="' + safeTitle + '" data-city="' + safeCity + '" onclick="openPropertyChat(event, this, true)">Schedule a tour</button>';
+          const inquiryAction = '<button class="chat-agent-btn" type="button" data-property="' + safeTitle + '" data-city="' + safeCity + '" onclick="openPropertyChat(event, this, false)">Chat with agent</button>';
+
+          const galleryImages = gallery.map((image, imageIndex) => {
+            const altText = safeTitle + ' property photo ' + (imageIndex + 2);
+            return '<button class="gallery-thumb" type="button" aria-label="View photo ' + (imageIndex + 2) + ' of ' + safeTitle + '" data-image-index="' + (imageIndex + 1) + '"><img src="' + image + '" alt="' + altText + '" loading="lazy" /></button>';
+          }).join('');
+
+          const detailSqft = (() => {
+            const detailsText = String(listing.details || listing.sqft || '').trim();
+            const sqftMatch = detailsText.match(/(\d[\d,]*(?:\.\d+)?)(?:\s*sq\.?\s*ft|\s*sqft)/i);
+            if (sqftMatch) return escapeHtml(`${sqftMatch[1]} sq ft`);
+            if (listing.squareFeet) return escapeHtml(`${listing.squareFeet} sq ft`);
+            return 'Sq ft available';
+          })();
+
+          const featureSummary = escapeHtml((listingUtilities || listingAmenities.join(' • ')).trim());
+          const detailPanel = '<div class="listing-feature-panel">' +
+            '<button class="listing-see-more" type="button" aria-expanded="false">See details</button>' +
+            '<div class="listing-utilities" title="' + featureSummary + '">' +
+              (listingDescription ? '<div class="listing-description-panel"><p class="listing-description">' + listingDescription + '</p></div>' : '') +
+              '<div class="listing-meta-row"><span class="property-type-label">Type</span><span>' + safeType + '</span></div>' +
+              '<div class="listing-meta-row"><span class="property-type-label">Details</span><span>' + safeDetails + '</span></div>' +
+              '<div class="listing-meta-row"><span class="property-type-label">Address</span><span>' + listingAddress + (zipCode ? ' · ' + zipCode : '') + '</span></div>' +
+              '<div class="listing-meta-row"><span class="property-type-label">Status</span><span>' + listingStatus + '</span></div>' +
+              '<div class="listing-meta-row"><span class="property-type-label">Mode</span><span>' + listingMode + '</span></div>' +
+              (listingSource ? '<div class="listing-meta-row"><span class="property-type-label">Source</span><span>' + listingSource + '</span></div>' : '') +
+              (listingPoster ? '<div class="listing-meta-row"><span class="property-type-label">Poster</span><span>' + listingPoster + '</span></div>' : '') +
+              (listingTextNumber ? '<div class="listing-meta-row"><span class="property-type-label">Text</span><span>' + listingTextNumber + '</span></div>' : '') +
+              '<div class="listing-chips">' + featuredTags + listingAmenitiesChips + '</div>' +
+            '</div>' +
+          '</div>';
+
+          return '<article class="property-card" data-index="' + listings.indexOf(listing) + '">' +
+            '<div class="gallery-grid">' +
+              '<button class="gallery-main" type="button" aria-label="View photos of ' + safeTitle + '" data-image-index="0"><img src="' + (gallery[0] || '') + '" alt="' + safeTitle + ' property photo" loading="lazy" /></button>' +
+              '<div class="gallery-side">' + galleryImages + '</div>' +
+              '<span class="gallery-count">' + count + ' photos</span>' +
+              '<button class="save-btn" type="button" aria-label="Save ' + safeTitle + '" aria-pressed="false">♡</button>' +
+            '</div>' +
+            '<div class="card-body">' +
+              '<div class="card-topline">' +
+                '<span class="status-badge">' + (listing.status || '') + '</span>' +
+                '<span class="price">' + safePrice + '</span>' +
+              '</div>' +
+              '<h3>' + safeTitle + '</h3>' +
+              '<p class="listing-location">' + safeCity + ', ' + safeState + '</p>' +
+              '<p class="listing-address">' + listingAddress + (zipCode ? ' · ' + zipCode : '') + '</p>' +
+              '<div class="listing-sqft-row"><span class="property-type-label">Sq ft</span><span class="listing-sqft-value">' + detailSqft + '</span></div>' +
+              detailPanel +
+              '<div class="listing-phone-row">' + phoneLink + shareButton + '</div>' +
+              '<div class="listing-actions">' + tourAction + inquiryAction + '</div>' +
+            '</div>' +
+          '</article>';
+        }).join('');
+        container.innerHTML = propertyCardsHtml;
+
+        const sharedListingKey = new URLSearchParams(window.location.search).get('listing');
+        if (sharedListingKey) {
+          const sharedCard = [...container.querySelectorAll('.property-card')].find((card) => getListingShareKey(listings[Number(card.dataset.index)]) === sharedListingKey);
+          const matchedListing = listings.find((listing) => getListingShareKey(listing) === sharedListingKey);
+          if (matchedListing) {
+            applyListingMetaTags(matchedListing);
+          }
+          sharedCard?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          sharedCard?.classList.add('shared-listing-highlight');
+        }
+
+        document.querySelectorAll('button.schedule-tour-btn').forEach((button) => {
+          button.addEventListener('click', (event) => {
+            if (event.defaultPrevented) return;
+            const card = event.currentTarget.closest('.property-card');
+            const index = Number(card.dataset.index);
+            activeListing = listings[index];
+            openChatwayListing(activeListing, true);
+          });
+        });
+
+        document.querySelectorAll('button.chat-agent-btn').forEach((button) => {
+          button.addEventListener('click', (event) => {
+            if (event.defaultPrevented) return;
+            const card = event.currentTarget.closest('.property-card');
+            const index = Number(card.dataset.index);
+            activeListing = listings[index];
+            openChatwayListing(activeListing, false);
+          });
+        });
+
+        document.querySelectorAll('button.share-listing-btn').forEach((button) => {
+          button.addEventListener('click', async () => {
+            const url = button.dataset.shareUrl;
+            try {
+              await navigator.clipboard.writeText(url);
+              button.textContent = 'Link copied';
+            } catch {
+              window.prompt('Copy this listing link:', url);
+            }
+            window.setTimeout(() => { button.textContent = 'Share listing'; }, 2200);
+          });
+        });
+
+        if (!window.copperFoxCardActionsBound) {
+          document.addEventListener('click', (event) => {
+            const button = event.target.closest('button.schedule-tour-btn, button.chat-agent-btn');
+            if (!button) return;
+            event.preventDefault();
+            event.stopPropagation();
+            const card = button.closest('.property-card');
+            if (!card) return;
+            const listing = listings[Number(card.dataset.index)];
+            activeListing = listing;
+            openChatwayListing(listing, button.classList.contains('schedule-tour-btn'));
+          });
+          window.copperFoxCardActionsBound = true;
+        }
+
+        document.querySelectorAll('.save-btn').forEach((button) => {
+          button.addEventListener('click', () => {
+            const isSaved = button.getAttribute('aria-pressed') === 'true';
+            button.setAttribute('aria-pressed', String(!isSaved));
+            button.textContent = isSaved ? '♡' : '♥';
+          });
+        });
+
+        document.querySelectorAll('.gallery-main, .gallery-thumb').forEach((button) => {
+          button.addEventListener('click', () => {
+            const card = button.closest('.property-card');
+            const listing = listings[Number(card.dataset.index)];
+            openPhotoViewer(listing, Number(button.dataset.imageIndex));
+          });
+        });
+
+        document.querySelectorAll('.listing-see-more').forEach((button) => {
+          button.addEventListener('click', () => {
+            const textBlock = button.closest('.listing-text-block');
+            const target = textBlock ? textBlock.querySelector('.listing-description, .listing-utilities') : button.nextElementSibling;
+            if (!target) return;
+
+            const expanded = !target.classList.contains('expanded');
+            target.classList.toggle('expanded', expanded);
+            button.textContent = expanded ? 'See less' : 'See more';
+            button.setAttribute('aria-expanded', String(expanded));
+          });
+        });
+
+        renderAdminList();
+
+        // Add pagination event listeners
+        if (prevPageBtn && !prevPageBtn.dataset.listenerAttached) {
+          prevPageBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+              currentPage--;
+              renderListings();
+              container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          });
+          prevPageBtn.dataset.listenerAttached = 'true';
+        }
+
+        if (nextPageBtn && !nextPageBtn.dataset.listenerAttached) {
+          nextPageBtn.addEventListener('click', () => {
+            const totalPages = Math.ceil(getFilteredListings().filter((listing) => listing.status !== 'Sold' && listing.status !== 'Draft' && !listing.isDraft).length / ITEMS_PER_PAGE);
+            if (currentPage < totalPages) {
+              currentPage++;
+              renderListings();
+              container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          });
+          nextPageBtn.dataset.listenerAttached = 'true';
+        }
+      }
+
+      function openPhotoViewer(listing, imageIndex) {
+        activeGallery = listing.gallery.slice(0, 35);
+        activePhotoIndex = imageIndex;
+        updatePhotoViewer(listing.title);
+        photoModal.classList.add('open');
+        photoModal.setAttribute('aria-hidden', 'false');
+      }
+
+      function updatePhotoViewer(title) {
+        photoViewer.src = activeGallery[activePhotoIndex];
+        photoViewer.alt = `${title} photo ${activePhotoIndex + 1}`;
+        photoCaption.textContent = `${title} · Photo ${activePhotoIndex + 1} of ${activeGallery.length}`;
+      }
+
+      function closePhotoViewer() {
+        photoModal.classList.remove('open');
+        photoModal.setAttribute('aria-hidden', 'true');
+        photoViewer.removeAttribute('src');
+      }
+
+      function openGeneralChat() {
+        openChatwayListing({
+          title: 'General inquiry',
+          city: 'Local area',
+          price: 'pricing available upon request',
+          details: ''
+        }, false);
+      }
+
+      function openChatwayListing(listing, isTourRequest = false) {
+        if (!listing) return;
+
+        const listingTitle = listing.title || 'this property';
+        const listingCity = listing.city || listing.location || 'the local area';
+        const message = isTourRequest
+          ? `Hello Cooper Fox, I want to schedule a tour for ${listingTitle} in ${listingCity}.`
+          : `Hello Cooper Fox, I want to chat about ${listingTitle} in ${listingCity}.`;
+
+        try {
+          sessionStorage.setItem('chatway_property_context', message);
+        } catch (error) {
+          console.warn('Chatway context storage failed:', error);
+        }
+
+        const candidates = [
+          window.$chatway,
+          window.chatway,
+          window.Chatway,
+          window.chatwayWidget,
+          window.chatwayApi,
+          window.ChatwayWidget,
+          typeof window.chatway === 'function' ? window.chatway : null
+        ];
+
+        for (const candidate of candidates) {
+          if (!candidate) continue;
+
+          const methodNames = ['openChatwayWidget', 'openChatWidget', 'openWidget', 'openChat', 'open'];
+          for (const methodName of methodNames) {
+            const method = typeof candidate === 'object' ? candidate[methodName] : null;
+            if (typeof method === 'function') {
+              try {
+                method.call(candidate);
+                return true;
+              } catch (error) {
+                console.warn('Chatway open failed:', error);
+              }
+            }
+          }
+
+          if (typeof candidate === 'function') {
+            try {
+              candidate();
+              return true;
+            } catch (error) {
+              console.warn('Chatway function failed:', error);
+            }
+          }
+        }
+
+        const popup = window.open('https://www.chatway.app', '_blank', 'noopener,noreferrer');
+        if (!popup) {
+          window.location.href = 'https://www.chatway.app';
+        }
+        return true;
+      }
+
+      function openPropertyChat(event, button, isTourRequest) {
+        event.preventDefault();
+        event.stopPropagation();
+        const listing = {
+          title: button.dataset.property || 'this property',
+          city: button.dataset.city || ''
+        };
+        activeListing = listing;
+        openChatwayListing(listing, isTourRequest);
+      }
+
+      let activeChatType = 'listing';
+
+      function loadPosterChats() {
+        try {
+          const stored = JSON.parse(window.localStorage.getItem('cooperFoxPosterChats') || '{}');
+          return stored && typeof stored === 'object' ? stored : {};
+        } catch {
+          return {};
+        }
+      }
+
+      function savePosterChats(chats) {
+        window.localStorage.setItem('cooperFoxPosterChats', JSON.stringify(chats));
+      }
+
+      const sentChatMessageIds = new Set();
+      const knownChatMessageIds = new Set();
+      let chatNotificationReady = false;
+
+      async function requestChatNotifications() {
+        if (!('Notification' in window)) return;
+        if (Notification.permission === 'default') {
+          const permission = await Notification.requestPermission();
+          chatNotificationReady = permission === 'granted';
+          return;
+        }
+        chatNotificationReady = Notification.permission === 'granted';
+      }
+
+      function notifyNewChatMessage(message, conversation) {
+        if (!chatNotificationReady || !message || sentChatMessageIds.has(message.id)) return;
+        if (document.visibilityState === 'visible' && activeListing && getPosterChatKey(activeListing) === conversation.listing_key) return;
+
+        new Notification(message.participant_name || 'New message', {
+          body: message.text || 'You have a new message.',
+          tag: `chat-${conversation.listing_key}`
+        });
+      }
+
+      function getPosterChatKey(listing) {
+        const title = (listing?.title || 'property').replace(/\s+/g, ' ').trim();
+        const city = (listing?.city || 'city').replace(/\s+/g, ' ').trim();
+        return `${title.toLowerCase()}|${city.toLowerCase()}`;
+      }
+
+      async function refreshChatConversations() {
+        try {
+          const response = await fetch('/api/chat?action=list', { cache: 'no-store' });
+          const data = await response.json();
+          if (!response.ok || !data.success || !Array.isArray(data.conversations)) {
+            return;
+          }
+
+          const normalized = {};
+          data.conversations.forEach((conversation) => {
+            if (!conversation || !conversation.listing_key) {
+              return;
+            }
+            const messages = Array.isArray(conversation.messages) ? conversation.messages : [];
+            messages.forEach((message) => {
+              if (knownChatMessageIds.has(message.id)) return;
+              if (knownChatMessageIds.size > 0) notifyNewChatMessage(message, conversation);
+              knownChatMessageIds.add(message.id);
+            });
+            normalized[conversation.listing_key] = messages.map((message) => ({
+              id: message.id,
+              sender: message.sender || '',
+              type: (message.sender || 'bot') === 'guest' ? 'user' : 'bot',
+              text: message.text || '',
+              sentAt: message.created_at || new Date().toISOString()
+            }));
+          });
+
+          savePosterChats(normalized);
+          renderInboxPanel();
+        } catch (error) {
+          console.warn('Unable to refresh chat conversations:', error);
+        }
+      }
+
+      function openPosterChat(listing) {
+        if (!listing) return;
+
+        requestChatNotifications();
+        activeChatType = 'poster';
+        activeListing = listing;
+        const posterName = listing.postedBy || 'the poster';
+        const chatKey = getPosterChatKey(listing);
+        const allChats = loadPosterChats();
+        const thread = Array.isArray(allChats[chatKey]) ? allChats[chatKey] : [];
+
+        chatTitle.textContent = `Message ${posterName} · ${listing.title}`;
+        chatMessages.innerHTML = thread.length
+          ? thread.map((message) => `<div class="message ${message.type}">${escapeHtml(message.text)}</div>`).join('')
+          : '<div class="message bot">Hello! Send us a message and Cooper Fox will reply as soon as possible.</div>';
+        chatInput.placeholder = 'Ask the poster about rent, timing, or the property...';
+        chatModal.classList.add('open');
+        chatModal.setAttribute('aria-hidden', 'false');
+        chatInput.focus();
+      }
+
+      let selectedInboxKey = '';
+
+      function renderInboxPanel() {
+        if (!inboxList || !inboxBody) return;
+
+        const inbox = loadPosterChats();
+        const entries = Object.entries(inbox)
+          .filter(([, thread]) => Array.isArray(thread) && thread.length)
+          .map(([key, thread]) => {
+            const last = thread[thread.length - 1];
+            const title = key.split('|')[0].replace(/-/g, ' ').replace(/\b\w/g, (letter) => letter.toUpperCase());
+            const city = key.split('|')[1]?.replace(/-/g, ' ') || 'Local listing';
+            return {
+              key,
+              title,
+              city,
+              lastMessage: last?.text || '',
+              thread,
+              unread: thread.filter((item) => item.type === 'bot').length
+            };
+          })
+          .sort((first, second) => (second.thread[second.thread.length - 1]?.sentAt || '').localeCompare(first.thread[first.thread.length - 1]?.sentAt || ''));
+
+        if (inboxQuickButton) {
+          const unreadTotal = entries.reduce((total, entry) => total + entry.unread, 0);
+          inboxQuickButton.querySelector('.inbox-badge').textContent = String(unreadTotal);
+          inboxQuickButton.classList.toggle('has-messages', unreadTotal > 0);
+        }
+
+        if (!entries.length) {
+          inboxList.innerHTML = '<div class="inbox-empty">No direct listing messages yet.</div>';
+          inboxBody.innerHTML = '<div class="message bot">Your private conversation history will appear here.</div>';
+          inboxThreadHeader.textContent = 'Select a conversation';
+          selectedInboxKey = '';
+          if (inboxQuickButton) {
+            inboxQuickButton.querySelector('.inbox-badge').textContent = '0';
+          }
+          return;
+        }
+
+        if (!selectedInboxKey || !entries.some((entry) => entry.key === selectedInboxKey)) {
+          selectedInboxKey = entries[0].key;
+        }
+
+        inboxList.innerHTML = entries.map((entry) => `
+          <button type="button" class="inbox-item ${entry.key === selectedInboxKey ? 'selected' : ''}" data-inbox-key="${escapeHtml(entry.key)}">
+            <div class="inbox-item-head">
+              <strong>${escapeHtml(entry.title)}</strong>
+              <span class="inbox-live-tag">Live</span>
+            </div>
+            <span>${escapeHtml(entry.city)}</span>
+            <small>${escapeHtml(entry.lastMessage.slice(0, 50))}</small>
+          </button>
+        `).join('');
+
+        const selected = entries.find((entry) => entry.key === selectedInboxKey);
+        if (!selected) return;
+
+        inboxThreadHeader.textContent = `${selected.title} · ${selected.city}`;
+        inboxBody.innerHTML = selected.thread.map((message) => `<div class="message ${message.type}">${escapeHtml(message.text)}</div>`).join('');
+
+        inboxList.querySelectorAll('.inbox-item').forEach((button) => {
+          button.addEventListener('click', () => {
+            selectedInboxKey = button.dataset.inboxKey;
+            renderInboxPanel();
+            inboxInput.focus();
+          });
+        });
+      }
+
+      function openInboxPanel() {
+        requestChatNotifications();
+        renderInboxPanel();
+        inboxModal.classList.add('open');
+        inboxModal.setAttribute('aria-hidden', 'false');
+      }
+
+      function openLocalChat(listing, isTourRequest = false) {
+        if (!listing) return;
+
+        requestChatNotifications();
+        activeChatType = 'listing';
+        activeListing = listing;
+        const listingKey = listing.title ? `${listing.title}-${listing.city || 'local'}`.toLowerCase().replace(/[^a-z0-9]+/g, '-') : '';
+        if (listingKey && typeof socket !== 'undefined' && socket && typeof socket.emit === 'function') {
+          socket.emit('join-room', listingKey);
+        }
+
+        chatTitle.textContent = isTourRequest ? `Schedule a tour · ${listing.title}` : `${listing.title} inquiry`;
+        chatMessages.innerHTML = `
+          <div class="message bot">
+            Hello! Thanks for your interest in ${listing.title}. Send us a message and Cooper Fox will reply as soon as possible.
+          </div>
+        `;
+        chatInput.placeholder = isTourRequest ? 'Preferred tour date and time...' : 'Ask about this home...';
+
+        chatModal.classList.add('open');
+        chatModal.setAttribute('aria-hidden', 'false');
+        chatInput.focus();
+      }
+
+      function renderMessageBubble(type, text, options = {}) {
+        const wrapper = document.createElement('div');
+        wrapper.className = `message ${type}`;
+
+        const bubble = document.createElement('div');
+        bubble.className = 'message-text';
+        bubble.textContent = text;
+        wrapper.appendChild(bubble);
+
+        const meta = document.createElement('div');
+        meta.className = 'message-meta';
+        const time = document.createElement('span');
+        time.textContent = options.time || new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+        meta.appendChild(time);
+
+        if (type === 'user') {
+          const label = document.createElement('span');
+          label.className = 'read-status';
+          label.textContent = options.read === false ? 'Sent' : 'Read';
+          meta.appendChild(label);
+        }
+
+        wrapper.appendChild(meta);
+        return wrapper;
+      }
+
+      function appendMessage(type, message, options = {}) {
+        const msg = renderMessageBubble(type, message, options);
+        chatMessages.appendChild(msg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      function setTypingIndicator(visible, label = 'typing...') {
+        const indicator = document.getElementById('typingIndicator');
+        if (!indicator) return;
+        indicator.hidden = !visible;
+        indicator.querySelector('small').textContent = label;
+      }
+
+      function notifyTyping(visible) {
+        if (!activeListing) return;
+        const listingKey = activeListing.title ? `${activeListing.title}-${activeListing.city || 'local'}`.toLowerCase().replace(/[^a-z0-9]+/g, '-') : '';
+        if (!listingKey) return;
+
+        socket.emit('chat:typing', {
+          listing_key: listingKey,
+          sender: 'guest',
+          participant_name: 'Guest',
+          is_typing: visible,
+        });
+      }
+
+      function markMessagesRead() {
+        if (!activeListing) return;
+        const listingKey = activeListing.title ? `${activeListing.title}-${activeListing.city || 'local'}`.toLowerCase().replace(/[^a-z0-9]+/g, '-') : '';
+        if (!listingKey) return;
+
+        fetch('/api/chat?action=mark-read', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ listing_key: listingKey })
+        }).catch(() => {});
+      }
+
+      chatInput.addEventListener('input', () => {
+        if (!chatInput.value.trim()) {
+          notifyTyping(false);
+          return;
+        }
+        notifyTyping(true);
+      });
+
+      chatForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const message = chatInput.value.trim();
+
+        if (!message || !activeListing) return;
+
+        setTypingIndicator(false);
+        notifyTyping(false);
+
+        const listingKey = activeListing.title ? `${activeListing.title}-${activeListing.city || 'local'}`.toLowerCase().replace(/[^a-z0-9]+/g, '-') : '';
+        if (listingKey && typeof socket !== 'undefined' && socket && typeof socket.emit === 'function') {
+          socket.emit('join-room', listingKey);
+        }
+        const inquiryPayload = {
+          property: activeListing.title,
+          city: activeListing.city,
+          message,
+          name: '',
+          email: '',
+          source: activeChatType === 'poster' ? 'listing-chat' : 'listing-page',
+          listing_key: listingKey
+        };
+
+        const currentUser = JSON.parse(window.localStorage.getItem('copperFoxCurrentUser') || 'null');
+        if (currentUser) {
+          inquiryPayload.name = currentUser.name || '';
+          inquiryPayload.email = currentUser.email || '';
+        }
+
+        try {
+          const response = await fetch('/api/inquiries', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+            body: new URLSearchParams(inquiryPayload).toString()
+          });
+          const result = await response.json();
+          if (!response.ok || !result.success) {
+            throw new Error(result.message || 'Unable to send inquiry.');
+          }
+        } catch (error) {
+          console.error('Inquiry save failed:', error);
+        }
+
+        appendMessage('user', message, { time: new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }), read: true });
+        chatInput.value = '';
+
+        const chatKey = getPosterChatKey(activeListing);
+        const payload = {
+          listing_key: listingKey || chatKey,
+          property: activeListing.title || 'Property',
+          city: activeListing.city || 'Local',
+          sender: 'guest',
+          participant_name: 'Cooper Fox',
+          text: message
+        };
+
+        try {
+          const response = await fetch('/api/chat?action=send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const data = await response.json();
+          if (data && data.message && data.message.id) {
+            sentChatMessageIds.add(data.message.id);
+          }
+          if (data && data.success && typeof socket !== 'undefined' && socket && typeof socket.emit === 'function') {
+            socket.emit('chat:send', payload);
+          }
+        } catch (error) {
+          console.warn('Chat API send failed:', error);
+        }
+
+        if (activeChatType === 'poster') {
+          const posterPhone = getListingPhone(activeListing);
+          const allChats = loadPosterChats();
+          const thread = Array.isArray(allChats[chatKey]) ? allChats[chatKey] : [];
+          thread.push({ type: 'user', text: message, sentAt: new Date().toISOString(), status: 'read' });
+          allChats[chatKey] = thread;
+          savePosterChats(allChats);
+          refreshChatConversations();
+          return;
+        }
+
+        const allChats = loadPosterChats();
+        allChats[chatKey] = Array.isArray(allChats[chatKey]) ? allChats[chatKey] : [];
+        allChats[chatKey].push({ type: 'user', text: message, sentAt: new Date().toISOString(), status: 'read' });
+        savePosterChats(allChats);
+        refreshChatConversations();
+      });
+
+      socket.on('chat:typing', ({ room, sender, isTyping, participantName }) => {
+        if (!activeListing) return;
+        const listingKey = activeListing.title ? `${activeListing.title}-${activeListing.city || 'local'}`.toLowerCase().replace(/[^a-z0-9]+/g, '-') : '';
+        if (!listingKey || room !== listingKey) return;
+        if (sender === 'guest') return;
+        setTypingIndicator(isTyping, `${participantName || 'Cooper Fox'} is typing...`);
+      });
+
+      socket.on('chat:message', ({ room, message }) => {
+        if (!activeListing) return;
+        const listingKey = activeListing.title ? `${activeListing.title}-${activeListing.city || 'local'}`.toLowerCase().replace(/[^a-z0-9]+/g, '-') : '';
+        if (!listingKey || room !== listingKey) return;
+        if (message && message.text) {
+          appendMessage('bot', message.text, { time: new Date(message.created_at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) });
+          refreshChatConversations();
+        }
+      });
+
+      socket.on('chat:read', ({ room }) => {
+        if (!activeListing) return;
+        const listingKey = activeListing.title ? `${activeListing.title}-${activeListing.city || 'local'}`.toLowerCase().replace(/[^a-z0-9]+/g, '-') : '';
+        if (!listingKey || room !== listingKey) return;
+        refreshChatConversations();
+      });
+
+      closeChatBtn.addEventListener('click', () => {
+        chatModal.classList.remove('open');
+        chatModal.setAttribute('aria-hidden', 'true');
+      });
+
+      if (inboxQuickButton) {
+        inboxQuickButton.addEventListener('click', () => {
+          const hasChatway = Boolean(
+            window.$chatway ||
+            window.chatway ||
+            window.Chatway ||
+            window.chatwayWidget ||
+            window.chatwayApi ||
+            window.ChatwayWidget
+          );
+
+          if (hasChatway) {
+            openGeneralChat();
+            return;
+          }
+
+          openInboxPanel();
+        });
+      }
+
+      document.querySelector('[data-close-inbox]').addEventListener('click', () => {
+        inboxModal.classList.remove('open');
+        inboxModal.setAttribute('aria-hidden', 'true');
+      });
+
+      inboxModal.addEventListener('click', (event) => {
+        if (event.target === inboxModal) {
+          inboxModal.classList.remove('open');
+          inboxModal.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      inboxForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (!selectedInboxKey) return;
+
+        const message = inboxInput.value.trim();
+        if (!message) return;
+
+        const inbox = loadPosterChats();
+        const thread = Array.isArray(inbox[selectedInboxKey]) ? inbox[selectedInboxKey] : [];
+        thread.push({ type: 'user', text: message, sentAt: new Date().toISOString() });
+        inbox[selectedInboxKey] = thread;
+        savePosterChats(inbox);
+
+        const listingKey = selectedInboxKey;
+        try {
+          const response = await fetch('/api/chat?action=send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              listing_key: listingKey,
+              property: selectedInboxKey.split('|')[0].replace(/-/g, ' ').replace(/\b\w/g, (letter) => letter.toUpperCase()),
+              city: 'Local',
+              sender: 'agent',
+              participant_name: 'Agent',
+              text: message
+            })
+          });
+          const data = await response.json();
+          if (data && data.message && data.message.id) {
+            sentChatMessageIds.add(data.message.id);
+          }
+        } catch (error) {
+          console.warn('Inbox chat sync failed:', error);
+        }
+
+        inboxInput.value = '';
+        renderInboxPanel();
+      });
+
+      chatModal.addEventListener('click', (event) => {
+        if (event.target === chatModal) {
+          chatModal.classList.remove('open');
+          chatModal.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      closePhotoBtn.addEventListener('click', closePhotoViewer);
+      previousPhotoBtn.addEventListener('click', () => {
+        activePhotoIndex = (activePhotoIndex - 1 + activeGallery.length) % activeGallery.length;
+        updatePhotoViewer(photoCaption.textContent.split(' · ')[0]);
+      });
+      nextPhotoBtn.addEventListener('click', () => {
+        activePhotoIndex = (activePhotoIndex + 1) % activeGallery.length;
+        updatePhotoViewer(photoCaption.textContent.split(' · ')[0]);
+      });
+      photoModal.addEventListener('click', (event) => {
+        if (event.target === photoModal) closePhotoViewer();
+      });
+
+      cityFilter.addEventListener('change', () => {
+        currentPage = 1;
+        renderListings();
+      });
+      cityFilter.addEventListener('input', () => {
+        currentPage = 1;
+        const value = cityFilter.value.trim();
+        if (value) {
+          locationSearch.value = value;
+        }
+        renderListings();
+      });
+      stateFilter.addEventListener('change', () => {
+        currentPage = 1;
+        renderListings();
+      });
+      propertyTypeFilter.addEventListener('change', () => {
+        currentPage = 1;
+        renderListings();
+      });
+      priceFilter.addEventListener('change', () => {
+        currentPage = 1;
+        renderListings();
+      });
+      minPriceFilter.addEventListener('input', () => {
+        currentPage = 1;
+        renderListings();
+      });
+      maxPriceFilter.addEventListener('input', () => {
+        currentPage = 1;
+        renderListings();
+      });
+      sortFilter.addEventListener('change', () => {
+        currentPage = 1;
+        renderListings();
+      });
+
+      const triggerSearch = (value) => {
+        currentPage = 1;
+        const searchValue = normalizeSearchTerm(value);
+        if (!searchValue) {
+          renderListings();
+          return;
+        }
+
+        applySearchLocation(searchValue);
+        document.getElementById('listings').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      };
+
+      searchButton.addEventListener('click', () => triggerSearch(locationSearch.value));
+
+      locationSearch.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          triggerSearch(locationSearch.value);
+        }
+      });
+
+      resetFilters.addEventListener('click', () => {
+        cityFilter.value = '';
+        stateFilter.value = 'all';
+        priceFilter.value = 'all';
+        propertyTypeFilter.value = 'all';
+        minPriceFilter.value = '';
+        maxPriceFilter.value = '';
+        sortFilter.value = 'featured';
+        locationSearch.value = '';
+        visibleListingCount = 24;
+        currentPage = 1;
+        renderListings();
+      });
+
+      function inferListingFromImportUrl(url) {
+        const trimmed = String(url || '').trim();
+        if (!trimmed) return null;
+
+        try {
+          const parsed = new URL(trimmed);
+          const pathParts = parsed.pathname.split('/').filter(Boolean);
+          const titleFromPath = pathParts[pathParts.length - 1] || 'Imported property';
+          const cleanedTitle = titleFromPath.replace(/[-_]+/g, ' ').replace(/\b\w/g, (letter) => letter.toUpperCase());
+          const fallbackCity = parsed.hostname.includes('zillow') ? 'California' : 'City';
+
+          return {
+            title: cleanedTitle || 'Imported property',
+            city: pathParts[pathParts.length - 2] ? pathParts[pathParts.length - 2].replace(/[-_]+/g, ' ') : 'California',
+            state: 'California',
+            propertyType: 'House',
+            status: 'Draft',
+            details: 'Imported from an authorized provider feed. Review pricing and amenities before publishing.',
+            sourcePrice: 0,
+            displayPrice: 0,
+            priceOverride: false,
+            importSource: trimmed,
+            sourceName: parsed.hostname.replace(/^www\./, '')
+          };
+        } catch {
+          return {
+            title: 'Imported property',
+            city: 'California',
+            state: 'California',
+            propertyType: 'House',
+            status: 'Draft',
+            details: 'Imported from an authorized provider feed. Review and publish from the admin dashboard.',
+            sourcePrice: 0,
+            displayPrice: 0,
+            priceOverride: false,
+            importSource: trimmed,
+            sourceName: 'Authorized source'
+          };
+        }
+      }
+
+      function resetListingForm() {
+        editingListingIndex = -1;
+        listingForm.reset();
+        document.getElementById('listingMode').value = 'published';
+        document.getElementById('listingStatus').value = 'For Rent';
+        document.getElementById('listingPriceOverride').checked = false;
+        document.getElementById('listingTextNumber').value = '+1 (346) 316-3488';
+        document.getElementById('listingAddress').value = '';
+        document.getElementById('listingZip').value = '';
+        listingFormTitle.textContent = 'Add a property';
+        listingSubmit.textContent = 'Add listing';
+        cancelEdit.hidden = true;
+      }
+
+      function startListingEdit(index) {
+        const listing = listings[index];
+        if (!listing) return;
+
+        editingListingIndex = index;
+        document.getElementById('listingTitle').value = listing.title || '';
+        document.getElementById('listingCity').value = listing.city || '';
+        document.getElementById('listingPrice').value = getListingDisplayPriceValue(listing) || listing.priceValue || 0;
+        document.getElementById('listingSourcePrice').value = listing.sourcePrice || listing.priceValue || 0;
+        document.getElementById('listingDisplayPrice').value = listing.displayPrice || listing.priceValue || 0;
+        document.getElementById('listingPriceOverride').checked = Boolean(listing.priceOverride);
+        document.getElementById('listingSourceUrl').value = listing.importSource || listing.sourceUrl || '';
+        document.getElementById('listingTextNumber').value = listing.textingNumber || listing.contactPhone || '+1 (346) 316-3488';
+        document.getElementById('listingAddress').value = listing.address || listing.streetAddress || '';
+        document.getElementById('listingZip').value = listing.zipCode || listing.zip || '';
+        document.getElementById('listingAmenities').value = Array.isArray(listing.amenities) ? listing.amenities.join(', ') : (listing.amenities || '');
+        listingPropertyType.value = listing.propertyType || 'House';
+        document.getElementById('listingState').value = listing.state || 'California';
+        document.getElementById('listingStatus').value = listing.status || 'For Rent';
+        document.getElementById('listingMode').value = listing.isDraft ? 'draft' : (listing.status === 'Pending' ? 'pending' : 'published');
+        document.getElementById('listingDetails').value = listing.details || '';
+        document.getElementById('listingGallery').value = (listing.gallery || []).filter((image) => !image.startsWith('data:')).join('\n');
+        listingImages.value = '';
+        listingFormTitle.textContent = 'Edit property';
+        listingSubmit.textContent = 'Save changes';
+        cancelEdit.hidden = false;
+        listingForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      document.querySelectorAll('.quick-action').forEach((button) => {
+        button.addEventListener('click', () => {
+          const action = button.dataset.quickAction;
+          if (action === 'new') {
+            resetListingForm();
+            listingForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            return;
+          }
+          if (action === 'import') {
+            importListingForm.hidden = false;
+            importListingUrl.focus();
+            return;
+          }
+          if (action === 'drafts') {
+            const draftListings = listings.filter((listing) => listing.status === 'Draft' || listing.isDraft);
+            if (!draftListings.length) {
+              window.alert('No draft listings yet. Save one as a draft to manage it here.');
+              return;
+            }
+            window.alert(`${draftListings.length} draft listing${draftListings.length === 1 ? '' : 's'} ready to review.`);
+            return;
+          }
+          if (action === 'messages') {
+            openInboxPanel();
+            return;
+          }
+          window.alert('Inquiry and application flows are already available through the existing site chat and contact actions.');
+        });
+      });
+
+      cancelImportButton.addEventListener('click', () => {
+        importListingForm.reset();
+        importListingForm.hidden = true;
+      });
+
+      importListingForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const rawUrl = importListingUrl.value.trim();
+        if (!rawUrl) {
+          window.alert('Paste an authorized listing URL before importing.');
+          return;
+        }
+        const importedListing = inferListingFromImportUrl(rawUrl);
+        if (!importedListing) return;
+        importProvider.value = importProvider.value || 'zillow';
+        document.getElementById('listingTitle').value = importedListing.title || 'Imported property';
+        document.getElementById('listingCity').value = importedListing.city || document.getElementById('listingCity').value || 'California';
+        document.getElementById('listingState').value = importedListing.state || document.getElementById('listingState').value || 'California';
+        document.getElementById('listingPrice').value = importedListing.displayPrice || importedListing.sourcePrice || 0;
+        document.getElementById('listingSourcePrice').value = importedListing.sourcePrice || 0;
+        document.getElementById('listingDisplayPrice').value = importedListing.displayPrice || importedListing.sourcePrice || 0;
+        document.getElementById('listingPriceOverride').checked = importedListing.priceOverride;
+        document.getElementById('listingPropertyType').value = importedListing.propertyType || 'House';
+        document.getElementById('listingStatus').value = importedListing.status || 'Draft';
+        document.getElementById('listingMode').value = 'draft';
+        document.getElementById('listingSourceUrl').value = importedListing.importSource || rawUrl;
+        document.getElementById('listingDetails').value = importedListing.details || 'Imported listing';
+        document.getElementById('listingAmenities').value = 'Parking, pet friendly, in-unit laundry, central AC';
+        importListingForm.reset();
+        importListingForm.hidden = true;
+        listingForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      listingForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const basePrice = Number(document.getElementById('listingPrice').value) || 0;
+        const sourcePrice = Number(document.getElementById('listingSourcePrice').value) || basePrice;
+        const approvedDisplayPrice = Number(document.getElementById('listingDisplayPrice').value) || basePrice;
+        const priceOverride = document.getElementById('listingPriceOverride').checked;
+        const effectivePrice = priceOverride ? approvedDisplayPrice : basePrice;
+        const pastedImages = document.getElementById('listingGallery').value
+          .split('\n')
+          .map((image) => image.trim())
+          .filter(Boolean)
+          .slice(0, 35);
+        const uploadedImages = Array.from(listingImages.files).slice(0, 35 - pastedImages.length);
+        const uploadedGallery = await Promise.all(uploadedImages.map((file) => new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        })));
+        const gallery = [...pastedImages, ...uploadedGallery];
+
+        const existingGallery = editingListingIndex >= 0 ? listings[editingListingIndex].gallery || [] : [];
+        const finalGallery = gallery.length ? gallery : existingGallery;
+
+        if (!finalGallery.length) {
+          window.alert('Please choose at least one property photo or paste an image filename or URL.');
+          return;
+        }
+
+        const listingStatus = document.getElementById('listingStatus').value || 'For Rent';
+        const listingMode = document.getElementById('listingMode').value || 'published';
+        const isDraft = listingMode === 'draft' || listingStatus === 'Draft';
+        const amenities = document.getElementById('listingAmenities').value
+          .split(',')
+          .map((item) => item.trim())
+          .filter(Boolean)
+          .slice(0, 12);
+
+        const listingTextNumber = document.getElementById('listingTextNumber').value.trim() || '+1 (346) 316-3488';
+        const listingAddress = document.getElementById('listingAddress').value.trim();
+        const listingZip = document.getElementById('listingZip').value.trim();
+        const updatedListing = {
+          title: document.getElementById('listingTitle').value.trim(),
+          price: formatPrice(effectivePrice),
+          priceValue: effectivePrice,
+          sourcePrice,
+          displayPrice: approvedDisplayPrice,
+          priceOverride,
+          propertyType: listingPropertyType.value,
+          status: listingStatus,
+          isDraft,
+          mode: listingMode,
+          details: document.getElementById('listingDetails').value.trim(),
+          city: document.getElementById('listingCity').value.trim(),
+          state: document.getElementById('listingState').value,
+          address: listingAddress,
+          zipCode: listingZip,
+          amenities,
+          gallery: finalGallery,
+          contactPhone: listingTextNumber,
+          textingNumber: listingTextNumber,
+          posterContact: listingTextNumber,
+          importSource: document.getElementById('listingSourceUrl').value.trim(),
+          sourceName: importProvider?.value || 'Manual entry'
+        };
+
+        if (editingListingIndex >= 0) {
+          listings[editingListingIndex] = updatedListing;
+        } else {
+          listings.push(updatedListing);
+        }
+
+        try {
+          await saveListings();
+          resetListingForm();
+          renderListings();
+        } catch (error) {
+          window.alert('Listing could not be saved. The sync endpoint rejected the update.');
+          console.error('Listing save failed:', error);
+        }
+      });
+
+      cancelEdit.addEventListener('click', resetListingForm);
+
+      adminList.addEventListener('click', (event) => {
+        const button = event.target.closest('button[data-action]');
+        if (!button) return;
+
+        const index = Number(button.dataset.index);
+        if (button.dataset.action === 'edit') {
+          startListingEdit(index);
+          return;
+        }
+
+        if (button.dataset.action === 'delete') {
+          listings.splice(index, 1);
+        } else {
+          const current = listings[index];
+          listings[index].status = current.status === 'Sold' || current.status === 'Rented' ? 'For Rent' : 'Sold';
+          listings[index].isDraft = false;
+        }
+
+        saveListings();
+        renderListings();
+      });
+
+      videoForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const newLinks = document.getElementById('tiktokLinks').value
+          .split('\n')
+          .map((url) => url.trim())
+          .filter((url) => url.startsWith('https://www.tiktok.com/') || url.startsWith('https://lite.tiktok.com/'))
+          .map((url) => ({
+            title: 'New property tour',
+            state: url.includes('lite.tiktok.com') ? 'North Carolina' : 'California',
+            url
+          }));
+
+        tikTokVideoLinks = [...tikTokVideoLinks, ...newLinks];
+        window.localStorage.setItem('copperFoxTikTokVideos', JSON.stringify(tikTokVideoLinks));
+        videoForm.reset();
+        renderTikTokVideos();
+      });
+
+      addAdditionalReviews();
+      applyReviewRatings();
+
+      const loadMoreReviews = document.getElementById('loadMoreReviews');
+      let visibleReviews = 5;
+      const reviewCards = [...document.querySelectorAll('.review-card')];
+      reviewCards.slice(0, visibleReviews).forEach((review) => review.classList.remove('review-is-hidden'));
+      loadMoreReviews?.addEventListener('click', () => {
+        reviewCards.slice(visibleReviews, visibleReviews + 5).forEach((review) => review.classList.remove('review-is-hidden'));
+        visibleReviews += 5;
+        if (visibleReviews >= reviewCards.length && loadMoreReviews) loadMoreReviews.hidden = true;
+      });
+
+      window.listings = listings;
+      window.renderListings = renderListings;
+      window.initializeListings = initializeListings;
+      initializeListings();
+      startSharedListingSync();
+      refreshChatConversations();
+      window.setInterval(refreshChatConversations, 5000);
+
+      const heroVideo = document.getElementById('heroVideo');
+      const topbar = document.querySelector('.topbar');
+      const menuToggle = document.querySelector('.menu-toggle');
+
+      menuToggle.addEventListener('click', () => {
+        const isOpen = topbar.classList.toggle('menu-open');
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+        menuToggle.textContent = isOpen ? 'Close' : 'Menu';
+      });
+
+      const updateTopbar = () => {
+        if (topbar) topbar.classList.toggle('scrolled', window.scrollY > 12);
+      };
+
+      window.addEventListener('scroll', updateTopbar, { passive: true });
+      updateTopbar();
+
+      const startHeroVideo = async () => {
+        if (!heroVideo) return;
+
+        heroVideo.muted = true;
+        heroVideo.setAttribute('playsinline', 'true');
+        heroVideo.setAttribute('autoplay', 'true');
+        heroVideo.setAttribute('loop', 'true');
+
+        try {
+          await heroVideo.play();
+        } catch (error) {
+          heroVideo.addEventListener('loadeddata', () => {
+            heroVideo.play().catch(() => {});
+          }, { once: true });
+        }
+      };
+
+      window.addEventListener('load', startHeroVideo);
+      startHeroVideo();
+    </script>
+
+    <script>
+      // Local assistant is the active customer support chat for Cooper Fox Realty.
+      // External Chatway/Vapi integrations are disabled to keep one branded assistant flow.
+    </script>
+
+    <script>
+      const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      function addScrollReveals() {
+        const revealTargets = document.querySelectorAll('main > section:not(.featured), .property-card, .review-card, .benefit-card, .main-footer');
+        revealTargets.forEach((element, index) => {
+          element.classList.add('reveal-on-scroll');
+          element.style.transitionDelay = `${Math.min(index % 4, 3) * 70}ms`;
+        });
+
+        if (motionPreference.matches || !('IntersectionObserver' in window)) {
+          revealTargets.forEach((element) => element.classList.add('is-visible'));
+          return;
+        }
+
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -35px' });
+
+        revealTargets.forEach((element) => revealObserver.observe(element));
+      }
+
+      function animateStats() {
+        const statsStrip = document.querySelector('.stats-strip');
+        const statValues = [
+          { element: document.querySelector('.stat-item:nth-child(1) strong'), value: 1200, suffix: 'K+', divisor: 1000 },
+          { element: document.querySelector('.stat-item:nth-child(2) strong'), value: 98, suffix: '%' },
+          { element: document.querySelector('.stat-item:nth-child(3) strong'), value: 24, suffix: ' hrs' },
+          { element: document.querySelector('.stat-item:nth-child(4) strong'), value: 1, suffix: '%' }
+        ];
+        if (!statsStrip || motionPreference.matches) return;
+
+        let hasAnimated = false;
+        const animate = () => {
+          if (hasAnimated) return;
+          hasAnimated = true;
+          const startTime = performance.now();
+          const duration = 1100;
+          const tick = (now) => {
+            const progress = Math.min((now - startTime) / duration, 1);
+            const easedProgress = 1 - Math.pow(1 - progress, 3);
+            statValues.forEach(({ element, value, suffix, divisor = 1 }) => {
+              if (!element) return;
+              const currentValue = value * easedProgress / divisor;
+              element.textContent = divisor > 1 ? `${currentValue.toFixed(1)}${suffix}` : `${Math.round(currentValue)}${suffix}`;
+            });
+            if (progress < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        };
+
+        if ('IntersectionObserver' in window) {
+          const statsObserver = new IntersectionObserver((entries, observer) => {
+            if (!entries.some((entry) => entry.isIntersecting)) return;
+            animate();
+            observer.disconnect();
+          }, { threshold: 0.4 });
+          statsObserver.observe(statsStrip);
+        } else {
+          animate();
+        }
+      }
+
+      function addHeroTilt() {
+        const hero = document.querySelector('.hero');
+        const visual = document.querySelector('.hero-visual');
+        if (!hero || !visual || motionPreference.matches || !window.matchMedia('(hover: hover)').matches) return;
+
+        hero.addEventListener('pointermove', (event) => {
+          const bounds = hero.getBoundingClientRect();
+          const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+          const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+          visual.style.setProperty('--tilt-x', `${x * 2.5}deg`);
+          visual.style.setProperty('--tilt-y', `${y * -2.5}deg`);
+        });
+        hero.addEventListener('pointerleave', () => {
+          visual.style.removeProperty('--tilt-x');
+          visual.style.removeProperty('--tilt-y');
+        });
+      }
+
+      addScrollReveals();
+      animateStats();
+      addHeroTilt();
+    </script>
+    <script>
+      function signOutCurrentUser() {
+        localStorage.removeItem('copperFoxCurrentUser');
+        window.location.reload();
+      }
+
+      async function updateUserProfile() {
+        const topbar = document.querySelector('.topbar');
+        const profileCard = document.getElementById('userProfileCard');
+        const profileName = document.getElementById('profileName');
+        const profileEmail = document.getElementById('profileEmail');
+
+        if (profileCard) profileCard.style.display = 'none';
+        if (topbar) topbar.classList.remove('has-user');
+
+        if (profileName) profileName.textContent = 'Guest';
+        if (profileEmail) profileEmail.textContent = 'Public visitor';
+      }
+
+      updateUserProfile();
+    </script>
+    <script src="remember-last-page.js"></script>
+  </body>
+</html>

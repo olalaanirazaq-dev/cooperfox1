@@ -1,0 +1,5 @@
+$env:GOOGLE_CLIENT_ID = "your-real-client-id.apps.googleusercontent.com"
+
+$env:GOOGLE_CLIENT_SECRET = "your-real-client-secret"
+
+& "C:\xampp\php\php.exe" -S 127.0.0.1:8000 -t "C:\Users\USER\OneDrive\Desktop\copper fox realty agent"

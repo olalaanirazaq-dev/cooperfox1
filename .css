@@ -1,0 +1,17 @@
+body { margin: 0;
+    background-color: #fff;
+
+}
+
+'
+header {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+    background: #fff; 
+}
+
+.background-header { position: absolute;
+    object-fit: cover;
+
+}
